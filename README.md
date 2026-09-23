@@ -17,3 +17,9 @@ Repository ที่แนะนำ: `provincial-valuation-committee`
 Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)` → Save
 
 > หมายเหตุ: สถานะวันหมดวาระคำนวณจากวันที่ปัจจุบันของอุปกรณ์ผู้ใช้ และ “ใกล้หมดวาระ” หมายถึงเหลือไม่เกิน 365 วัน
+
+
+## V4 Complete
+- รวมไฟล์ `thailand-provinces.geojson` จำนวน 77 จังหวัดไว้ในโครงการแล้ว
+- แผนที่โหลดจากไฟล์ภายใน repository ไม่พึ่ง CDN ภายนอก
+- ชื่อจังหวัดเชื่อมด้วยฟิลด์ `ADM1_TH`
