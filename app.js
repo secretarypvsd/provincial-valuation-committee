@@ -1,4 +1,4 @@
-const DATA=window.COMMITTEE_DATA||[]; const TODAY=new Date(); TODAY.setHours(0,0,0,0);
+const DATA=window.COMMITTEE_DATA||[];const PROVINCES=[...new Set(DATA.map(r=>r.province))].sort((a,b)=>a.localeCompare(b,'th')); const TODAY=new Date(); TODAY.setHours(0,0,0,0);
 const $=id=>document.getElementById(id); const state={province:'',expertise:'',status:'',duplicate:'',search:''};
 const normExp=s=>s.includes('สถาปัตยกรรม')?'ด้านสถาปัตยกรรมหรือด้านวิศวกรรม':s;
 const fmt=d=>{if(!d)return'-';const x=new Date(d+'T00:00:00');return x.toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'})};
@@ -24,11 +24,35 @@ function renderMap(){
   }
   mapFallback();
 }
+function renderQuickKpis(){
+  const currentYear=new Date().getFullYear();
+  const expiringThisYear=DATA.filter(r=>new Date(r.expires+'T00:00:00').getFullYear()===currentYear).length;
+  $('quickKpis').innerHTML=`
+    <div class="quick-kpi total"><div class="icon">👥</div><div><strong>${DATA.length.toLocaleString()}</strong><span>ผู้ทรงคุณวุฒิทั้งหมด</span></div></div>
+    <div class="quick-kpi expiring"><div class="icon">⏳</div><div><strong>${expiringThisYear.toLocaleString()}</strong><span>ครบวาระในปี พ.ศ. ${currentYear+543}</span></div></div>`;
+}
+function showSuggestions(q){
+  const box=$('provinceSuggestions');
+  q=q.trim();
+  if(!q){box.hidden=true;box.innerHTML='';return}
+  const matches=PROVINCES.filter(p=>p.includes(q)).slice(0,8);
+  box.innerHTML=matches.map(p=>`<div class="suggestion" data-province="${p}">${p}</div>`).join('');
+  box.hidden=!matches.length;
+  box.querySelectorAll('.suggestion').forEach(el=>el.onclick=()=>{
+    const p=el.dataset.province;
+    $('searchProvince').value=p;
+    state.search=p;
+    state.province=p;
+    $('province').value=p;
+    box.hidden=true;
+    render();
+  });
+}
 function renderDup(){let entries=Object.entries(PSTATS);let counts=[0,1,2,3,4].map(k=>entries.filter(x=>k===4?x[1].dupCount>=4:x[1].dupCount===k).length);$('dupSummary').innerHTML=[['s0',counts[0],'ไม่ซ้ำสาขา'],['s1',counts[1],'ซ้ำ 1 สาขา'],['s2',counts[2],'ซ้ำ 2 สาขา'],['s3',counts[3],'ซ้ำ 3 สาขา'],['s4',counts[4],'มากกว่า 3 สาขา']].map(x=>`<div class="summary ${x[0]}"><strong>${x[1]}</strong>${x[2]}</div>`).join('');$('dupTable').innerHTML=entries.filter(x=>x[1].dupCount>0).sort((a,b)=>b[1].dupCount-a[1].dupCount).map(([p,s])=>`<tr><td>${p}</td><td>ซ้ำ ${s.dupCount} สาขา</td><td>${s.dup.map(x=>`${x[0].replace('ด้าน','')} (${x[1]})`).join('<br>')}</td></tr>`).join('')||'<tr><td colspan="3">ไม่พบจังหวัดที่ซ้ำสาขา</td></tr>'}
 function renderYears(rows){let m={};rows.forEach(r=>{let a=new Date(r.appointed).getFullYear()+543,e=new Date(r.expires).getFullYear()+543;(m[a]??={a:0,e:0}).a++;(m[e]??={a:0,e:0}).e++});let max=Math.max(1,...Object.values(m).flatMap(x=>[x.a,x.e]));$('yearChart').innerHTML=Object.keys(m).sort().map(y=>`<div class="bar-row"><span>พ.ศ. ${y}</span><div><div class="bar-track" title="แต่งตั้ง ${m[y].a}"><div class="bar-fill" style="width:${m[y].a/max*100}%"></div></div><div class="bar-track" style="margin-top:3px" title="ครบวาระ ${m[y].e}"><div class="bar-fill" style="width:${m[y].e/max*100}%;background:linear-gradient(90deg,#d9b8dc,#e5c5b4)"></div></div></div><b>${m[y].a}/${m[y].e}</b></div>`).join('')+'<p class="hint">ตัวเลขด้านขวา = แต่งตั้ง / ครบวาระ</p>'}
 function renderExpert(rows){let m={};rows.forEach(r=>m[normExp(r.expertise)]=(m[normExp(r.expertise)]||0)+1);let colors=['#9fcdb6','#a8c9dc','#c7b5dd','#e3b6a4'];let total=Object.values(m).reduce((a,b)=>a+b,0)||1,acc=0,stops=[];Object.values(m).forEach((v,i)=>{let s=acc/total*360;acc+=v;let e=acc/total*360;stops.push(`${colors[i%colors.length]} ${s}deg ${e}deg`)});$('expertChart').innerHTML=`<div class="donut-wrap"><div class="donut" style="background:conic-gradient(${stops.join(',')})"></div><div class="legend">${Object.entries(m).map(([k,v],i)=>`<div><span class="dot" style="background:${colors[i%colors.length]}"></span>${k.replace('ด้าน','')} <b>${v}</b> (${(v/total*100).toFixed(1)}%)</div>`).join('')}</div></div>`}
 function renderTable(rows){$('rowCount').textContent=rows.length;$('mainTable').innerHTML=rows.map((r,i)=>{let s=statusOf(r),d=daysLeft(r),cls=s==='ปกติ'?'normal':s==='ใกล้หมดวาระ'?'soon':'expired';return `<tr><td>${i+1}</td><td>${r.province}</td><td><b>${r.name}</b></td><td>${normExp(r.expertise)}</td><td>${fmt(r.appointed)}</td><td>${fmt(r.expires)}</td><td>${d.toLocaleString()}</td><td><span class="status-pill status-${cls}">${s}</span></td></tr>`}).join('')||'<tr><td colspan="8">ไม่พบข้อมูลตามตัวกรอง</td></tr>'}
 function render(){let rows=filtered();renderMap();renderYears(rows);renderExpert(rows);renderTable(rows)}
 function clearAll(){Object.keys(state).forEach(k=>state[k]='');['searchProvince','province','expertise','status','duplicate'].forEach(id=>$(id).value='');render()}
-fillSelects();renderDup();render();
-$('searchProvince').oninput=e=>{state.search=e.target.value.trim();render()};['province','expertise','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;
+fillSelects();renderQuickKpis();renderDup();render();
+$('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;

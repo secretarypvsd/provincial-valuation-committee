@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>แผนที่ประเทศไทยแสดงการซ้ำซ้อนระดับจังหวัด</title>
-<link rel="stylesheet" href="styles.css?v=5.0">
+<title>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</title>
+<link rel="stylesheet" href="styles.css?v=5.1">
 </head>
 <body>
 <header class="topbar">
@@ -13,7 +13,7 @@
     <div><strong>กรมธนารักษ์</strong><small>THE TREASURY DEPARTMENT</small></div>
   </div>
   <div class="headline">
-    <h1>แผนที่ประเทศไทยแสดงการซ้ำซ้อนระดับจังหวัด</h1>
+    <h1>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</h1>
     <p>คลิกที่จังหวัดบนแผนที่เพื่อกรองข้อมูล • สีแสดงระดับการซ้ำซ้อนของสาขา</p>
   </div>
   <div class="top-actions"><span>⌂ หน้าหลัก</span><b>📅 ข้อมูล ณ วันที่ 16 กันยายน 2569</b></div>
@@ -22,7 +22,7 @@
 <main class="dashboard">
   <section class="map-panel">
     <aside class="side-filters">
-      <label>🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" placeholder="ค้นหาชื่อจังหวัด..."></label>
+      <label class="search-wrap">🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" type="search" autocomplete="off" placeholder="พิมพ์ชื่อจังหวัด..."><div id="provinceSuggestions" class="suggestions" hidden></div></label>
       <label>📍 เลือกจังหวัด<select id="province"><option value="">ทุกจังหวัด</option></select></label>
       <label>🎓 เลือกสาขาเชี่ยวชาญ<select id="expertise"><option value="">ทุกสาขา</option></select></label>
       <label>⏳ เลือกสถานะวันหมดวาระ<select id="status"><option value="">ทุกสถานะ</option><option>ปกติ</option><option>ใกล้หมดวาระ</option><option>หมดวาระแล้ว</option></select></label>
@@ -41,7 +41,7 @@
 
   <section class="right-column">
     <div class="card summary-panel">
-      <div class="section-title"><span>📊</span><h2>สรุปจังหวัดที่ซ้ำสาขาและไม่ซ้ำสาขา</h2></div>
+      <div class="section-title"><span>📊</span><h2>สรุปจังหวัดที่ซ้ำสาขาและไม่ซ้ำสาขา</h2></div><div id="quickKpis" class="quick-kpis"></div>
       <div id="dupSummary" class="summary-cards"></div>
       <div class="table-wrap small"><table><thead><tr><th>จังหวัด</th><th>สถานะ</th><th>สาขาที่ซ้ำ (จำนวน)</th></tr></thead><tbody id="dupTable"></tbody></table></div>
     </div>
@@ -56,7 +56,7 @@
     <div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div>
   </section>
 </main>
-<script src="data.js?v=5.0"></script>
-<script src="map-data.js?v=5.0"></script>
-<script src="app.js?v=5.0"></script>
+<script src="data.js?v=5.1"></script>
+<script src="map-data.js?v=5.1"></script>
+<script src="app.js?v=5.1"></script>
 </body></html>
