@@ -35,3 +35,6 @@ body:before{content:"";position:fixed;inset:98px 0 0;background:linear-gradient(
 
 .treasury-logo{width:68px;height:68px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))}
 @media(max-width:900px){.treasury-logo{width:54px;height:54px}}
+
+/* V5.3: selection never overrides the semantic duplication color */
+.thai-province.selected{stroke:#075c57!important;stroke-width:3!important;filter:drop-shadow(0 0 5px rgba(7,92,87,.32))}
