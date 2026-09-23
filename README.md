@@ -23,3 +23,7 @@ Settings → Pages → Build and deployment → Deploy from a branch → `main` 
 - รวมไฟล์ `thailand-provinces.geojson` จำนวน 77 จังหวัดไว้ในโครงการแล้ว
 - แผนที่โหลดจากไฟล์ภายใน repository ไม่พึ่ง CDN ภายนอก
 - ชื่อจังหวัดเชื่อมด้วยฟิลด์ `ADM1_TH`
+
+
+## V4.1
+แผนที่ 77 จังหวัดถูกฝังเป็น `map-data.js` และโหลดเป็น JavaScript โดยตรงก่อน `app.js` จึงไม่ใช้ `fetch()` และไม่ขึ้นกับ MIME type หรือ path ของ GeoJSON บน GitHub Pages.

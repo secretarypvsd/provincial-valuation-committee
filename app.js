@@ -17,14 +17,12 @@ function selectProvince(p){state.province=state.province===p?'':p;$('province').
 function geoPaths(geom,project){let polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;return polys.map(poly=>poly.map(ring=>'M'+ring.map(([x,y])=>project(x,y).join(',')).join('L')+'Z').join('')).join('')}
 function drawThailandMap(geo){let el=$('provinceMap'),w=620,h=650,pad=18,pts=[];geo.features.forEach(f=>{let g=f.geometry,c=g.type==='Polygon'?[g.coordinates]:g.coordinates;c.forEach(poly=>poly.forEach(r=>r.forEach(p=>pts.push(p))))});let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),scale=Math.min((w-2*pad)/(maxX-minX),(h-2*pad)/(maxY-minY)),ox=(w-(maxX-minX)*scale)/2,oy=(h-(maxY-minY)*scale)/2;let project=(x,y)=>[ox+(x-minX)*scale,h-(oy+(y-minY)*scale)];let paths=geo.features.map(f=>{let p=f.properties||{},name=p.ADM1_TH||p.NL_NAME_1||p.name_th||'',n=PSTATS[name]?.dupCount||0,active=state.province===name;return `<path class="thai-province${active?' selected':''}" data-p="${name}" d="${geoPaths(f.geometry,project)}" fill="${mapColor(n,active)}"><title>${name} • ${n?`ซ้ำ ${n} สาขา`:'ไม่ซ้ำสาขา'} — คลิกเพื่อกรองข้อมูล</title></path>`}).join('');el.innerHTML=`<div class="map-shell"><svg class="thailand-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="แผนที่ประเทศไทย 77 จังหวัด">${paths}</svg><div class="map-legend"><span><i style="background:#e2f1dd"></i>ไม่ซ้ำ</span><span><i style="background:#c4e4cf"></i>ซ้ำ 1 สาขา</span><span><i style="background:#9fd3c0"></i>ซ้ำ 2 สาขา</span><span><i style="background:#75b9b3"></i>ซ้ำมากกว่า 2 สาขา</span></div><div class="map-selected">${state.province?'จังหวัดที่เลือก: <b>'+state.province+'</b>':'คลิกจังหวัดบนแผนที่เพื่อกรองข้อมูล'}</div></div>`;el.querySelectorAll('.thai-province').forEach(x=>x.onclick=()=>selectProvince(x.dataset.p))}
 function renderMap(){
-  if(MAP_GEO){drawThailandMap(MAP_GEO);return}
-  if(MAP_LOADING)return;
-  MAP_LOADING=true;
-  $('provinceMap').innerHTML='<div class="map-loading">กำลังโหลดแผนที่ประเทศไทย…</div>';
-  fetch('./thailand-provinces.geojson',{cache:'no-store'})
-    .then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()})
-    .then(g=>{MAP_GEO=g;MAP_LOADING=false;drawThailandMap(g)})
-    .catch(()=>{MAP_LOADING=false;mapFallback()});
+  if(!MAP_GEO) MAP_GEO=window.THAILAND_GEOJSON||null;
+  if(MAP_GEO && Array.isArray(MAP_GEO.features) && MAP_GEO.features.length===77){
+    drawThailandMap(MAP_GEO);
+    return;
+  }
+  mapFallback();
 }
 function renderDup(){let entries=Object.entries(PSTATS);let n0=entries.filter(x=>x[1].dupCount===0).length,n2=entries.filter(x=>x[1].dupCount===2).length,n3=entries.filter(x=>x[1].dupCount>=3).length;$('dupSummary').innerHTML=`<div class="summary"><strong>${n0}</strong>ไม่ซ้ำสาขา</div><div class="summary"><strong>${n2}</strong>ซ้ำ 2 สาขา</div><div class="summary"><strong>${n3}</strong>ซ้ำ 3 สาขา</div>`;$('dupTable').innerHTML=entries.filter(x=>x[1].dupCount>0).sort((a,b)=>b[1].dupCount-a[1].dupCount).map(([p,s])=>`<tr><td>${p}</td><td>${s.dupCount>=3?'ซ้ำ 3 สาขา':'ซ้ำ 2 สาขา'}</td><td>${s.dup.map(x=>`${x[0].replace('ด้าน','')} (${x[1]})`).join('<br>')}</td></tr>`).join('')||'<tr><td colspan="3">ไม่พบจังหวัดที่ซ้ำสาขา</td></tr>'}
 function renderYears(rows){let m={};rows.forEach(r=>{let a=new Date(r.appointed).getFullYear()+543,e=new Date(r.expires).getFullYear()+543;(m[a]??={a:0,e:0}).a++;(m[e]??={a:0,e:0}).e++});let max=Math.max(1,...Object.values(m).flatMap(x=>[x.a,x.e]));$('yearChart').innerHTML=Object.keys(m).sort().map(y=>`<div class="bar-row"><span>พ.ศ. ${y}</span><div><div class="bar-track" title="แต่งตั้ง ${m[y].a}"><div class="bar-fill" style="width:${m[y].a/max*100}%"></div></div><div class="bar-track" style="margin-top:3px" title="ครบวาระ ${m[y].e}"><div class="bar-fill" style="width:${m[y].e/max*100}%;background:linear-gradient(90deg,#d9b8dc,#e5c5b4)"></div></div></div><b>${m[y].a}/${m[y].e}</b></div>`).join('')+'<p class="hint">ตัวเลขด้านขวา = แต่งตั้ง / ครบวาระ</p>'}
