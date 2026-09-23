@@ -1,17 +1,62 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Provincial Valuation Committee Dashboard</title><link rel="stylesheet" href="styles.css?v=4.1"></head><body>
-<header class="hero"><div><div class="eyebrow">PROVINCIAL VALUATION COMMITTEE</div><h1>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</h1><p>ระบบติดตามข้อมูล พร้อมการวิเคราะห์วาระและการซ้ำซ้อนของสาขาเชี่ยวชาญ</p></div><button id="resetTop" class="soft-btn">↻ โหลดข้อมูลใหม่</button></header>
-<main><section id="kpis" class="kpis"></section>
-<section class="panel filters"><div class="section-title"><span>🔍</span><h2>ตัวกรองข้อมูล</h2></div><div class="filter-grid">
-<label>⌨️ พิมพ์ค้นหาชื่อจังหวัด<input id="searchProvince" placeholder="พิมพ์ชื่อจังหวัดที่นี่..."></label>
-<label>📍 หรือเลือกจากรายการจังหวัด<select id="province"><option value="">ทุกจังหวัด</option></select></label>
-<label>🎓 สาขาเชี่ยวชาญ<select id="expertise"><option value="">ทุกสาขา</option></select></label>
-<label>⏳ สถานะวันหมดวาระ<select id="status"><option value="">ทุกสถานะ</option><option>ปกติ</option><option>ใกล้หมดวาระ</option><option>หมดวาระแล้ว</option></select></label>
-<label>⚠️ รูปแบบการซ้ำซ้อนในจังหวัด<select id="duplicate"><option value="">ทั้งหมด</option><option value="none">ไม่ซ้ำสาขา</option><option value="2">ซ้ำ 2 สาขา</option><option value="3">ซ้ำ 3 สาขา</option></select></label>
-<button id="clear" class="clear-btn">ล้างตัวกรองทั้งหมด</button></div></section>
-<section class="panel"><div class="section-title"><span>🔔</span><h2>แจ้งเตือนกรรมการหมดวาระและใกล้หมดวาระ (ภายใน 1 ปี)</h2><span id="alertCount" class="badge">0</span><button id="toggleAlerts" class="mini-btn">▼ ย่อ/ขยาย</button></div><div id="alerts" class="alerts"></div></section>
-<div class="two-col"><section class="panel"><div class="section-title"><span>🗺️</span><h2>แผนที่ประเทศไทยแสดงการซ้ำซ้อนระดับจังหวัด</h2></div><p class="hint">คลิกจังหวัดบนแผนที่เพื่อกรองข้อมูล • สีแสดงระดับการซ้ำซ้อนของสาขา</p><div id="provinceMap" class="province-map"></div></section>
-<section class="panel"><div class="section-title"><span>📊</span><h2>สรุปจังหวัดที่ซ้ำสาขาและไม่ซ้ำสาขา</h2></div><div id="dupSummary" class="summary-cards"></div><div class="table-wrap small"><table><thead><tr><th>จังหวัด</th><th>สถานะ</th><th>สาขาที่ซ้ำ (จำนวน)</th></tr></thead><tbody id="dupTable"></tbody></table></div></section></div>
-<div class="two-col"><section class="panel"><div class="section-title"><span>📅</span><h2>ภาพรวมปีที่แต่งตั้งและปีที่ครบวาระ (แนวนอน)</h2></div><div id="yearChart" class="chart"></div></section>
-<section class="panel"><div class="section-title"><span>🥧</span><h2>สัดส่วนแยกตามสาขาเชี่ยวชาญ</h2></div><div id="expertChart" class="chart"></div></section></div>
-<section class="panel"><div class="section-title"><span>📑</span><h2>ตารางรายชื่อกรรมการทั้งหมด (อิงตามตัวกรองด้านบน)</h2><span id="rowCount" class="badge">0</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div></section>
-<footer>Provincial Valuation Committee Dashboard • ข้อมูลจากไฟล์รายชื่อผู้ทรงคุณวุฒิ</footer></main><script src="data.js?v=4.1"></script><script src="map-data.js?v=4.1"></script><script src="app.js?v=4.1"></script></body></html>
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>แผนที่ประเทศไทยแสดงการซ้ำซ้อนระดับจังหวัด</title>
+<link rel="stylesheet" href="styles.css?v=5.0">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="seal">TD</div>
+    <div><strong>กรมธนารักษ์</strong><small>THE TREASURY DEPARTMENT</small></div>
+  </div>
+  <div class="headline">
+    <h1>แผนที่ประเทศไทยแสดงการซ้ำซ้อนระดับจังหวัด</h1>
+    <p>คลิกที่จังหวัดบนแผนที่เพื่อกรองข้อมูล • สีแสดงระดับการซ้ำซ้อนของสาขา</p>
+  </div>
+  <div class="top-actions"><span>⌂ หน้าหลัก</span><b>📅 ข้อมูล ณ วันที่ 16 กันยายน 2569</b></div>
+</header>
+
+<main class="dashboard">
+  <section class="map-panel">
+    <aside class="side-filters">
+      <label>🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" placeholder="ค้นหาชื่อจังหวัด..."></label>
+      <label>📍 เลือกจังหวัด<select id="province"><option value="">ทุกจังหวัด</option></select></label>
+      <label>🎓 เลือกสาขาเชี่ยวชาญ<select id="expertise"><option value="">ทุกสาขา</option></select></label>
+      <label>⏳ เลือกสถานะวันหมดวาระ<select id="status"><option value="">ทุกสถานะ</option><option>ปกติ</option><option>ใกล้หมดวาระ</option><option>หมดวาระแล้ว</option></select></label>
+      <label>👥 เลือกจำนวนสาขาที่ซ้ำซ้อน<select id="duplicate">
+        <option value="">ทั้งหมด</option><option value="none">ไม่ซ้ำสาขา</option>
+        <option value="1">ซ้ำ 1 สาขา</option><option value="2">ซ้ำ 2 สาขา</option>
+        <option value="3">ซ้ำ 3 สาขา</option><option value="4plus">ซ้ำมากกว่า 3 สาขา</option>
+      </select></label>
+      <button id="clear" class="reset-btn">↻ รีเซ็ตตัวกรอง</button>
+      <blockquote>“ข้อมูลที่ครบถ้วน<br>เพื่อการบริหารจัดการ<br>อย่างมีประสิทธิภาพ”</blockquote>
+    </aside>
+    <div class="map-stage">
+      <div id="provinceMap" class="province-map"></div>
+    </div>
+  </section>
+
+  <section class="right-column">
+    <div class="card summary-panel">
+      <div class="section-title"><span>📊</span><h2>สรุปจังหวัดที่ซ้ำสาขาและไม่ซ้ำสาขา</h2></div>
+      <div id="dupSummary" class="summary-cards"></div>
+      <div class="table-wrap small"><table><thead><tr><th>จังหวัด</th><th>สถานะ</th><th>สาขาที่ซ้ำ (จำนวน)</th></tr></thead><tbody id="dupTable"></tbody></table></div>
+    </div>
+    <div class="lower-grid">
+      <div class="card"><div class="section-title"><span>📅</span><h2>ภาพรวมปีที่แต่งตั้งและปีที่ครบวาระ</h2></div><div id="yearChart" class="chart"></div></div>
+      <div class="card"><div class="section-title"><span>🥧</span><h2>สัดส่วนแยกตามสาขาเชี่ยวชาญ</h2></div><div id="expertChart" class="chart"></div></div>
+    </div>
+  </section>
+
+  <section class="card full-table">
+    <div class="section-title"><span>📑</span><h2>ตารางรายชื่อกรรมการทั้งหมด</h2><span id="rowCount" class="badge">0</span></div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div>
+  </section>
+</main>
+<script src="data.js?v=5.0"></script>
+<script src="map-data.js?v=5.0"></script>
+<script src="app.js?v=5.0"></script>
+</body></html>
