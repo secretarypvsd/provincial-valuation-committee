@@ -32,3 +32,6 @@ body:before{content:"";position:fixed;inset:98px 0 0;background:linear-gradient(
 .quick-kpi .icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.75);display:grid;place-items:center;font-size:20px}
 .quick-kpi strong{display:block;font-size:30px;line-height:1;color:#0b3655}
 .quick-kpi span{font-size:12px;font-weight:700;color:#526a65}
+
+.treasury-logo{width:68px;height:68px;object-fit:contain;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.12))}
+@media(max-width:900px){.treasury-logo{width:54px;height:54px}}
