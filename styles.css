@@ -40,3 +40,133 @@ body:before{content:"";position:fixed;inset:98px 0 0;background:linear-gradient(
 .thai-province.selected{stroke:#075c57!important;stroke-width:3!important;filter:drop-shadow(0 0 5px rgba(7,92,87,.32))}
 
 .build-badge{position:fixed;right:10px;bottom:8px;z-index:9999;font:700 11px Arial,sans-serif;color:#075c57;background:#fff;border:1px solid #b8d7ce;border-radius:999px;padding:4px 8px;opacity:.75}
+
+
+/* =========================================================
+   V5.4 Responsive — Desktop / Laptop / Tablet / Mobile
+   ========================================================= */
+html{box-sizing:border-box;-webkit-text-size-adjust:100%}
+*,*:before,*:after{box-sizing:inherit}
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,canvas{max-width:100%}
+select,input,button{max-width:100%;font-size:16px}
+
+/* Flexible desktop shell */
+.dashboard,.dashboard-shell,.main-layout,.layout{
+  width:min(100%,1920px);
+  max-width:1920px;
+  margin-inline:auto;
+}
+
+/* Prevent grid/flex children from forcing horizontal overflow */
+.dashboard > *,.dashboard-shell > *,.main-layout > *,.layout > *,
+main > *,section > *,article > *{min-width:0}
+
+/* SVG map scales with its container */
+#thailandMap,.map-svg,.map-wrap svg,.map-panel svg{
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+}
+
+/* Tables remain usable on narrow screens */
+.table-wrap,.table-container,.dup-table-wrap{
+  max-width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+table{width:100%;max-width:100%}
+
+/* Large tablets / small laptops */
+@media (max-width:1200px){
+  body{font-size:14px}
+  .dashboard,.dashboard-shell,.main-layout,.layout{
+    grid-template-columns:minmax(220px,260px) minmax(0,1fr)!important;
+  }
+  .right-panel,.summary-panel,.analytics-panel{
+    grid-column:1/-1!important;
+  }
+}
+
+/* Tablet portrait */
+@media (max-width:900px){
+  body{overflow-x:hidden}
+  .dashboard,.dashboard-shell,.main-layout,.layout{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    min-height:auto!important;
+  }
+  .sidebar,.filter-panel,.left-panel{
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    position:relative!important;
+    inset:auto!important;
+  }
+  .filters,.filter-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+  .map-panel,.map-area,.map-section{
+    width:100%!important;
+    min-height:520px!important;
+  }
+  .right-panel,.summary-panel,.analytics-panel{
+    width:100%!important;
+  }
+  .quick-kpis,.kpi-grid,.summary-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+/* Phones */
+@media (max-width:600px){
+  body{font-size:13px}
+  .dashboard,.dashboard-shell,.main-layout,.layout{
+    padding:0!important;
+    gap:10px!important;
+  }
+  .sidebar,.filter-panel,.left-panel,
+  .map-panel,.map-area,.map-section,
+  .right-panel,.summary-panel,.analytics-panel,
+  .card{
+    border-radius:14px!important;
+  }
+  .filters,.filter-grid{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  .filter-card,.filter-item{padding:10px!important}
+  select,input,button{min-height:44px}
+  .map-panel,.map-area,.map-section{
+    min-height:430px!important;
+    overflow:hidden!important;
+  }
+  .legend,.map-legend{
+    transform:scale(.88);
+    transform-origin:right bottom;
+    max-width:210px!important;
+  }
+  .quick-kpis,.kpi-grid,.summary-grid{
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+  }
+  .summary{min-width:0!important;padding:10px 6px!important}
+  .summary strong{font-size:24px!important}
+  .charts,.chart-grid,.bottom-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+  }
+  table{min-width:560px}
+  .quote,.sidebar-quote{display:none!important}
+  .build-badge{font-size:9px!important;right:5px!important;bottom:5px!important}
+}
+
+/* Very small phones */
+@media (max-width:380px){
+  .quick-kpis,.kpi-grid,.summary-grid{grid-template-columns:1fr!important}
+  .map-panel,.map-area,.map-section{min-height:380px!important}
+}
