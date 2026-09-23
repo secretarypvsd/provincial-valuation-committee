@@ -38,3 +38,5 @@ body:before{content:"";position:fixed;inset:98px 0 0;background:linear-gradient(
 
 /* V5.3: selection never overrides the semantic duplication color */
 .thai-province.selected{stroke:#075c57!important;stroke-width:3!important;filter:drop-shadow(0 0 5px rgba(7,92,87,.32))}
+
+.build-badge{position:fixed;right:10px;bottom:8px;z-index:9999;font:700 11px Arial,sans-serif;color:#075c57;background:#fff;border:1px solid #b8d7ce;border-radius:999px;padding:4px 8px;opacity:.75}
