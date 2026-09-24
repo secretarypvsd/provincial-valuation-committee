@@ -28,7 +28,7 @@ function renderQuickKpis(rows=DATA){
   const currentYear=new Date().getFullYear();
   const expiringThisYear=rows.filter(r=>new Date(r.expires+'T00:00:00').getFullYear()===currentYear).length;
   $('quickKpis').innerHTML=`
-    <div class="quick-kpi total"><div class="icon">👥</div><div><strong>${rows.length.toLocaleString()}</strong><span>ผู้ทรงคุณวุฒิทั้งหมดตามตัวกรอง</span></div></div>
+    <div class="quick-kpi total"><div class="icon">👥</div><div><strong>${rows.length.toLocaleString()}</strong><span>จำนวนคณะกรรมการผู้ทรงคุณวุฒิฯ</span></div></div>
     <div class="quick-kpi expiring"><div class="icon">⏳</div><div><strong>${expiringThisYear.toLocaleString()}</strong><span>ครบวาระในปี พ.ศ. ${currentYear+543}</span></div></div>`;
 }
 function showSuggestions(q){
