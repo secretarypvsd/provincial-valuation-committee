@@ -13,3 +13,7 @@ V5:
 
 ## V6.0 Executive Edition
 Premium minimal executive UI. Keeps V5.5 Google Sheets Live data, map/filter logic, duplicate-status semantics, and responsive behavior.
+
+
+## V6.1 Executive Map Palette
+Map semantics: no duplicate #A9B8A5 (sage), duplicate 2 #D6B86A (champagne gold), duplicate 3 #C47C5A (burnished copper), >3 #8F4A55 (burgundy). Selected province uses navy outline without overriding its semantic fill.
