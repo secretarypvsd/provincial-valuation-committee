@@ -1,4 +1,4 @@
-const DATA=window.COMMITTEE_DATA||[];const PROVINCES=[...new Set(DATA.map(r=>r.province))].sort((a,b)=>a.localeCompare(b,'th')); const TODAY=new Date(); TODAY.setHours(0,0,0,0);
+function bootDashboard(DATA){const PROVINCES=[...new Set(DATA.map(r=>r.province))].sort((a,b)=>a.localeCompare(b,'th')); const TODAY=new Date(); TODAY.setHours(0,0,0,0);
 const $=id=>document.getElementById(id); const state={province:'',expertise:'',appointedYear:'',status:'',duplicate:'',search:''};
 const normExp=s=>s.includes('สถาปัตยกรรม')?'ด้านสถาปัตยกรรมหรือด้านวิศวกรรม':s;
 const fmt=d=>{if(!d)return'-';const x=new Date(d+'T00:00:00');return x.toLocaleDateString('th-TH',{day:'2-digit',month:'2-digit',year:'numeric'})};
@@ -62,3 +62,13 @@ function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDu
 function clearAll(){Object.keys(state).forEach(k=>state[k]='');['searchProvince','province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).value='');render()}
 fillSelects();render();
 $('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;
+
+}
+
+const GOOGLE_SHEET_ID='1nKmFlpb92ksITl1OVeMtjxfgYYZC63OjPImJ95L_JKs';
+const GOOGLE_SHEET_GID='513917908';
+const GOOGLE_SHEET_CSV=`https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:csv&gid=${GOOGLE_SHEET_GID}`;
+function parseCSV(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&q&&n==='"'){cell+='"';i++;continue}if(c==='"'){q=!q;continue}if(c===','&&!q){row.push(cell);cell='';continue}if((c==='\n'||c==='\r')&&!q){if(c==='\r'&&n==='\n')i++;row.push(cell);if(row.some(v=>v!==''))rows.push(row);row=[];cell='';continue}cell+=c}if(cell||row.length){row.push(cell);rows.push(row)}return rows}
+function sheetDate(v){if(!v)return '';v=String(v).trim();let m=v.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m){let y=+m[3];if(y>2400)y-=543;return `${y}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`}const months={มกราคม:1,กุมภาพันธ์:2,มีนาคม:3,เมษายน:4,พฤษภาคม:5,มิถุนายน:6,กรกฎาคม:7,สิงหาคม:8,กันยายน:9,ตุลาคม:10,พฤศจิกายน:11,ธันวาคม:12};let c=v.replace(/^วัน[^,]*,\s*/,'').replace(/,/g,' ').replace(/\s+/g,' ').trim(),a=c.split(' '),i=a.findIndex(x=>months[x]);if(i>=0){let d=+(a[i+1]||0),y=+(a[i+2]||0);if(y>2400)y-=543;if(d&&y)return `${y}-${String(months[a[i]]).padStart(2,'0')}-${String(d).padStart(2,'0')}`}return ''}
+async function loadLiveData(){const r=await fetch(GOOGLE_SHEET_CSV,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const rows=parseCSV(await r.text());const data=rows.slice(1).filter(r=>r[1]&&r[2]).map((r,i)=>({id:Number(r[0])||i+1,province:(r[1]||'').trim(),name:(r[2]||'').replace(/\s+/g,' ').trim(),qualification:(r[3]||'').replace(/\s+/g,' ').trim(),expertise:(r[4]||'').replace(/\s+/g,' ').trim(),appointed:sheetDate(r[5]),expires:sheetDate(r[6])}));if(!data.length)throw new Error('No rows');return data}
+loadLiveData().then(bootDashboard).catch(err=>{console.error(err);document.body.insertAdjacentHTML('afterbegin','<div style="position:fixed;z-index:10000;top:8px;left:50%;transform:translateX(-50%);background:#fff3cd;color:#664d03;border:1px solid #ffecb5;padding:10px 16px;border-radius:10px;font:14px sans-serif">ไม่สามารถโหลดข้อมูล Google Sheet ได้ กรุณาตรวจสอบสิทธิ์การแชร์</div>')});
