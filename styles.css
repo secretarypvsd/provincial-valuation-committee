@@ -170,3 +170,158 @@ table{width:100%;max-width:100%}
   .quick-kpis,.kpi-grid,.summary-grid{grid-template-columns:1fr!important}
   .map-panel,.map-area,.map-section{min-height:380px!important}
 }
+
+
+/* =========================================================
+   V6.0 EXECUTIVE EDITION
+   Modern Government Executive Dashboard
+   ========================================================= */
+:root{
+  --exec-navy:#102a43;
+  --exec-navy-2:#173f5f;
+  --exec-gold:#b8944d;
+  --exec-gold-soft:#efe6d2;
+  --exec-ivory:#f6f4ef;
+  --exec-paper:#fffdf9;
+  --exec-ink:#1d2b36;
+  --exec-muted:#71808d;
+  --exec-line:#e7e3da;
+  --exec-shadow:0 14px 40px rgba(16,42,67,.08);
+}
+body{
+  color:var(--exec-ink);
+  background:var(--exec-ivory);
+  letter-spacing:.01em;
+}
+body:before{
+  inset:88px 0 0;
+  background:
+    radial-gradient(circle at 82% 8%,rgba(184,148,77,.08),transparent 26%),
+    linear-gradient(180deg,#f7f5f0 0%,#f2f4f5 100%);
+}
+.topbar{
+  height:88px;
+  padding:10px clamp(20px,3vw,48px);
+  grid-template-columns:270px minmax(0,1fr) 230px;
+  background:linear-gradient(110deg,#0d2438 0%,#123653 64%,#173f5f 100%);
+  border-bottom:1px solid rgba(214,181,112,.7);
+  box-shadow:0 10px 30px rgba(13,36,56,.12);
+}
+.treasury-logo{width:58px;height:58px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.18))}
+.brand{gap:11px}.brand strong{font-size:19px;font-weight:700}.brand small{font-size:9px;opacity:.72;letter-spacing:1.1px}
+.headline{text-align:center;padding:0 14px}
+.eyebrow{font-size:9px;letter-spacing:1.8px;color:#dbc28e;font-weight:700;margin-bottom:4px}
+.headline h1{font-size:clamp(17px,1.45vw,23px);font-weight:650;line-height:1.3;letter-spacing:0}
+.headline p{font-size:11px;letter-spacing:.3px;color:rgba(255,255,255,.7)}
+.top-actions{font-size:11px;color:rgba(255,255,255,.72)}
+.top-actions span{display:none}
+.top-actions b{
+  background:rgba(255,255,255,.08);color:#e7d6ae;border:1px solid rgba(219,194,142,.32);
+  padding:8px 12px;border-radius:999px;font-size:10px;letter-spacing:.8px;font-weight:650;
+}
+.dashboard{max-width:1760px;padding:22px;gap:18px;grid-template-columns:minmax(0,1.42fr) minmax(430px,.9fr)}
+.map-panel,.card{
+  background:rgba(255,253,249,.96);
+  border:1px solid var(--exec-line);
+  border-radius:18px;
+  box-shadow:var(--exec-shadow);
+}
+.map-panel{min-height:748px;grid-template-columns:260px 1fr}
+.side-filters{
+  padding:18px 14px;
+  background:linear-gradient(180deg,#f4f1ea 0%,#f8f6f1 100%);
+  border-right:1px solid var(--exec-line);
+}
+.side-filters label{
+  background:transparent;border:0;border-bottom:1px solid #e2ddd3;border-radius:0;
+  padding:7px 3px 13px;margin-bottom:7px;font-size:11px;font-weight:650;color:#536372;
+}
+.side-filters input,.side-filters select{
+  margin-top:7px;padding:10px 11px;border:1px solid #ddd8cd;border-radius:9px;
+  background:#fffdf9;color:var(--exec-ink);font-size:12px;box-shadow:0 1px 0 rgba(16,42,67,.02);
+}
+.side-filters input:focus,.side-filters select:focus{
+  outline:none;border-color:#b8944d;box-shadow:0 0 0 3px rgba(184,148,77,.11);
+}
+.reset-btn{
+  margin-top:8px;border:1px solid #163852;border-radius:9px;background:#163852;
+  padding:11px;font-size:12px;font-weight:700;letter-spacing:.2px;box-shadow:none;
+}
+.reset-btn:hover{background:#0d293e}
+.side-filters blockquote{
+  margin:28px 7px 0;padding-left:14px;border-left:2px solid var(--exec-gold);
+  font-size:14px;font-weight:600;font-style:normal;color:#5d6973;line-height:1.7;
+}
+.map-stage{padding:14px 18px 12px;background:linear-gradient(180deg,#fffdf9,#fbfaf7)}
+.thailand-svg{height:635px;filter:drop-shadow(0 12px 18px rgba(16,42,67,.10))}
+.thai-province{stroke:#fffdf9;stroke-width:1.2}
+.thai-province:hover{stroke:#102a43;filter:brightness(.96);stroke-width:2}
+.thai-province.selected{stroke:#102a43!important;stroke-width:3!important;filter:drop-shadow(0 2px 5px rgba(16,42,67,.25))}
+.map-legend{
+  right:8px;bottom:46px;width:186px;background:rgba(255,253,249,.96);
+  border:1px solid var(--exec-line);border-radius:10px;padding:10px;box-shadow:0 8px 24px rgba(16,42,67,.07);
+}
+.map-selected{color:#102a43!important;border:1px solid var(--exec-line);box-shadow:0 5px 18px rgba(16,42,67,.06)}
+.right-column{gap:18px}.card{padding:18px}
+.section-title{gap:9px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--exec-line)}
+.section-title>span:first-child{filter:grayscale(1);opacity:.68}
+.section-title h2{font-size:14px;font-weight:700;color:var(--exec-navy);letter-spacing:.1px}
+.quick-kpis{gap:10px;margin-bottom:12px}
+.quick-kpi{
+  border-radius:12px;padding:14px;min-height:84px;border:1px solid var(--exec-line);
+  box-shadow:none;position:relative;overflow:hidden;
+}
+.quick-kpi:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--exec-gold)}
+.quick-kpi.total,.quick-kpi.expiring{background:#fffdf9}
+.quick-kpi .icon{width:38px;height:38px;border-radius:9px;background:#f1ede4;font-size:17px;filter:grayscale(.7)}
+.quick-kpi strong{font-size:29px;font-weight:700;color:var(--exec-navy)}
+.quick-kpi span{font-size:10px;color:var(--exec-muted);font-weight:650}
+.summary-cards{gap:7px}
+.summary{border-radius:10px;padding:11px 5px;border:1px solid rgba(16,42,67,.04);font-size:10px}
+.summary strong{font-size:24px;color:var(--exec-navy)}
+.summary.s0{background:#e7f2eb}.summary.s1{background:#e8eef5}.summary.s2{background:#f7edcc}.summary.s3{background:#f6dfcb}.summary.s4{background:#f3d9dc}
+.table-wrap{border:1px solid var(--exec-line);border-radius:10px;background:#fffdf9}
+.table-wrap.small{height:295px}
+table{font-size:11px}
+th{
+  background:#f3f1ec;color:#50606e;font-size:10px;text-transform:none;letter-spacing:.2px;
+  padding:10px;border-bottom:1px solid #ded9cf;
+}
+td{padding:9px 10px;border-bottom:1px solid #eeeae2}
+tbody tr:hover{background:#faf7f1}
+.lower-grid{gap:18px}
+.chart{min-height:220px}
+.bar-track{height:9px;background:#ebe8e1}
+.bar-fill{background:linear-gradient(90deg,#173f5f,#b8944d)}
+.donut:after{background:#fffdf9}
+.badge{background:#eee8dc;color:#745f35;border:1px solid #dfd3ba}
+.status-pill{font-size:10px;font-weight:650}
+.status-normal{background:#e6f0e9;color:#3f6a52}.status-soon{background:#f7edcf;color:#826b31}.status-expired{background:#f3dddf;color:#87545b}
+.suggestions{border-color:var(--exec-line);border-radius:9px;box-shadow:0 12px 28px rgba(16,42,67,.11)}
+.suggestion:hover,.suggestion.active{background:#f2ede2;color:#102a43}
+.build-badge{
+  right:12px;bottom:10px;color:#d6bd86;background:#102a43;border:1px solid rgba(214,189,134,.55);
+  border-radius:999px;padding:5px 9px;opacity:.9;letter-spacing:.5px;
+}
+@media(max-width:1100px){
+  .topbar{grid-template-columns:230px 1fr}.top-actions{display:none}
+  .dashboard{grid-template-columns:1fr}.map-panel{grid-template-columns:240px 1fr}
+}
+@media(max-width:900px){
+  .topbar{height:auto;min-height:82px;grid-template-columns:190px 1fr;padding:10px 16px}
+  .brand{display:flex}.headline{text-align:left}.eyebrow{display:none}.headline h1{font-size:16px}
+  .dashboard{padding:14px}
+  .map-panel{grid-template-columns:1fr;min-height:auto}
+  .side-filters{border-right:0;border-bottom:1px solid var(--exec-line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+  .side-filters label{margin:0}.side-filters blockquote{display:none}.reset-btn{align-self:end}
+  .province-map{min-height:560px}
+}
+@media(max-width:600px){
+  .topbar{grid-template-columns:1fr;text-align:center}.brand{justify-content:center}.headline{text-align:center;margin-top:4px}
+  .headline h1{font-size:14px}.headline p{font-size:10px}
+  .dashboard{padding:9px;gap:10px}
+  .side-filters{grid-template-columns:1fr;padding:12px}
+  .map-stage{padding:8px}.province-map{min-height:480px}.thailand-svg{height:480px}
+  .card{padding:13px}.section-title h2{font-size:13px}
+  .quick-kpi strong{font-size:25px}
+}

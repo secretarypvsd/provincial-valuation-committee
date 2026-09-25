@@ -9,3 +9,7 @@ V5:
 - สีการซ้ำซ้อน 5 ระดับ: ไม่ซ้ำ, ซ้ำ 1, ซ้ำ 2, ซ้ำ 3, มากกว่า 3 สาขา
 - ตัวกรองอยู่ด้านซ้ายของแผนที่
 - รองรับ GitHub Pages แบบ static site
+
+
+## V6.0 Executive Edition
+Premium minimal executive UI. Keeps V5.5 Google Sheets Live data, map/filter logic, duplicate-status semantics, and responsive behavior.
