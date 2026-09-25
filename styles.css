@@ -329,10 +329,10 @@ tbody tr:hover{background:#faf7f1}
 
 /* V6.1 — Executive Map Palette */
 :root{
-  --map-sage:#A9B8A5;
-  --map-gold:#D6B86A;
-  --map-copper:#C47C5A;
-  --map-burgundy:#8F4A55;
+  --map-sage:#BFE3D0;
+  --map-gold:#F2D98B;
+  --map-copper:#F2AE7E;
+  --map-burgundy:#D9838F;
   --map-border:#F8F5EE;
 }
 .thai-province{
@@ -355,3 +355,26 @@ tbody tr:hover{background:#faf7f1}
 .summary.s2{background:rgba(214,184,106,.25)!important;border-color:rgba(214,184,106,.55)!important}
 .summary.s3{background:rgba(196,124,90,.20)!important;border-color:rgba(196,124,90,.48)!important}
 .summary.s4{background:rgba(143,74,85,.15)!important;border-color:rgba(143,74,85,.42)!important}
+
+/* V6.2 Bright Refined — brighter, calm, executive */
+:root{
+  --map-sage:#BFE3D0;
+  --map-gold:#F2D98B;
+  --map-copper:#F2AE7E;
+  --map-burgundy:#D9838F;
+  --map-border:#FFFFFF;
+}
+body{background:#F7F9FA}
+body:before{
+  background:
+    radial-gradient(circle at 82% 8%,rgba(242,217,139,.12),transparent 25%),
+    linear-gradient(180deg,#FBFCFC 0%,#F4F7F8 100%);
+}
+.map-panel,.card{background:rgba(255,255,255,.98);border-color:#E7ECEF}
+.map-stage{background:linear-gradient(180deg,#FFFFFF,#F8FAFA)}
+.side-filters{background:linear-gradient(180deg,#F7FAFA 0%,#F4F7F7 100%)}
+.map-legend{background:rgba(255,255,255,.97);border-color:#E3E9EC}
+.summary.s0{background:#EAF7F0!important;border-color:#CBE9D8!important}
+.summary.s2{background:#FFF7DC!important;border-color:#F1D98B!important}
+.summary.s3{background:#FFF0E6!important;border-color:#F1B68D!important}
+.summary.s4{background:#FBEAEC!important;border-color:#E3A0A9!important}
