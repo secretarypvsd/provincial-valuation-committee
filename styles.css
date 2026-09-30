@@ -329,7 +329,7 @@ tbody tr:hover{background:#faf7f1}
 
 /* V6.1 — Executive Map Palette */
 :root{
-  --map-sage:#00FF00;
+  --map-sage:#228B22;
   --map-gold:#FFFF00;
   --map-copper:#B22222;
   --map-burgundy:#9400D3;
@@ -358,7 +358,7 @@ tbody tr:hover{background:#faf7f1}
 
 /* V6.2 Bright Refined — brighter, calm, executive */
 :root{
-  --map-sage:#00FF00;
+  --map-sage:#228B22;
   --map-gold:#FFFF00;
   --map-copper:#B22222;
   --map-burgundy:#9400D3;
