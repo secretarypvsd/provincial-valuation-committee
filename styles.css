@@ -329,10 +329,10 @@ tbody tr:hover{background:#faf7f1}
 
 /* V6.1 — Executive Map Palette */
 :root{
-  --map-sage:#BFE3D0;
-  --map-gold:#F2D98B;
-  --map-copper:#F2AE7E;
-  --map-burgundy:#D9838F;
+  --map-sage:#00FF00;
+  --map-gold:#FFFF00;
+  --map-copper:#B22222;
+  --map-burgundy:#9400D3;
   --map-border:#F8F5EE;
 }
 .thai-province{
@@ -358,10 +358,10 @@ tbody tr:hover{background:#faf7f1}
 
 /* V6.2 Bright Refined — brighter, calm, executive */
 :root{
-  --map-sage:#BFE3D0;
-  --map-gold:#F2D98B;
-  --map-copper:#F2AE7E;
-  --map-burgundy:#D9838F;
+  --map-sage:#00FF00;
+  --map-gold:#FFFF00;
+  --map-copper:#B22222;
+  --map-burgundy:#9400D3;
   --map-border:#FFFFFF;
 }
 body{background:#F7F9FA}
@@ -378,3 +378,12 @@ body:before{
 .summary.s2{background:#FFF7DC!important;border-color:#F1D98B!important}
 .summary.s3{background:#FFF0E6!important;border-color:#F1B68D!important}
 .summary.s4{background:#FBEAEC!important;border-color:#E3A0A9!important}
+
+/* V6.3 exact requested map palette */
+.thai-province{stroke:#FFFFFF!important;stroke-width:1.25!important}
+.thai-province:hover{stroke:#102A43!important;stroke-width:2.2!important}
+.thai-province.selected{stroke:#102A43!important;stroke-width:3.2!important}
+.summary.s0{background:#E8FFE8!important;border-color:#00CC00!important}
+.summary.s2{background:#FFFDE0!important;border-color:#D6C900!important}
+.summary.s3{background:#F9E2E2!important;border-color:#B22222!important}
+.summary.s4{background:#F0E2FF!important;border-color:#9400D3!important}
