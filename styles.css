@@ -455,3 +455,73 @@ body:before{
 @media print {
   .data-status, .toolbar { display: none !important; }
 }
+
+
+/* V6.6: balance the action summary and expiry alerts in one unified card */
+.action-alert-panel {
+  max-width: 1680px;
+  margin: 14px auto 0;
+  padding: 20px;
+}
+.combined-panels-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+  gap: 24px;
+  align-items: start;
+}
+.combined-kpi-section,
+.combined-alert-section { min-width: 0; }
+.combined-kpi-section .section-title,
+.combined-alert-section .section-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e6e1d8;
+}
+.combined-kpi-section .section-title h2,
+.combined-alert-section .section-title h2 {
+  font-size: 14px;
+  margin: 0;
+}
+.combined-kpi-section .action-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.combined-alert-section .expiry-alerts {
+  display: block;
+  max-height: 360px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 2px 8px 2px 2px;
+  scrollbar-gutter: stable;
+}
+.combined-alert-section .expiry-item { margin-bottom: 8px; }
+.combined-alert-section .expiry-item:last-child { margin-bottom: 0; }
+.combined-alert-section .expiry-alerts::-webkit-scrollbar { width: 9px; }
+.combined-alert-section .expiry-alerts::-webkit-scrollbar-track {
+  background: #eef2f4; border-radius: 999px;
+}
+.combined-alert-section .expiry-alerts::-webkit-scrollbar-thumb {
+  background: #9aabb5; border-radius: 999px; border: 2px solid #eef2f4;
+}
+.combined-alert-section .expiry-alerts {
+  scrollbar-width: thin;
+  scrollbar-color: #9aabb5 #eef2f4;
+}
+@media(max-width: 900px) {
+  .action-alert-panel { margin-left: 12px; margin-right: 12px; }
+  .combined-panels-grid { grid-template-columns: 1fr; gap: 20px; }
+  .combined-kpi-section .action-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media(max-width: 600px) {
+  .action-alert-panel { padding: 14px; }
+  .combined-kpi-section .action-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .combined-alert-section .expiry-alerts { max-height: 300px; }
+}
+@media print {
+  .action-alert-panel { display: block !important; }
+  .combined-panels-grid { display: block; }
+  .combined-alert-section .expiry-alerts { max-height: none; overflow: visible; }
+}

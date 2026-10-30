@@ -23,15 +23,19 @@
 
 
 <main class="dashboard">
-  <section class="card action-panel">
-    <div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
+  <section class="card action-alert-panel">
+  <div class="combined-panels-grid">
+    <div class="combined-kpi-section">
+<div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
     <div id="actionKpis" class="action-kpis"></div>
-  </section>
-  <section class="card alert-panel">
-    <div class="section-title"><span>⏰</span><h2>แจ้งเตือนกรรมการใกล้ครบกำหนด</h2><span id="expiryAlertCount" class="badge">0</span></div>
+    </div>
+    <div class="combined-alert-section">
+<div class="section-title"><span>⏰</span><h2>แจ้งเตือนกรรมการใกล้ครบกำหนด</h2><span id="expiryAlertCount" class="badge">0</span></div>
     <p class="hint">แสดงรายการที่ครบกำหนดแล้ว หรือจะครบกำหนดภายใน 180 วัน</p>
     <div id="expiryAlerts" class="expiry-alerts"></div>
-  </section>
+    </div>
+  </div>
+</section>
   <section class="map-panel">
     <aside class="side-filters">
       <label class="search-wrap">🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" type="search" autocomplete="off" placeholder="พิมพ์ชื่อจังหวัด..."><div id="provinceSuggestions" class="suggestions" hidden></div></label>
