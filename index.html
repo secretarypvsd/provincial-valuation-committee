@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</title>
-<link rel="stylesheet" href="styles.css?v=5.4.4-20260924">
+<link rel="stylesheet" href="styles.css?v=6.4-20261030">
 </head>
-<body><div class="build-badge">V6.3 MAP COLORS</div>
+<body><div class="build-badge">V6.4 EXECUTIVE TOOLS</div>
 <header class="topbar">
   <div class="brand">
     <img class="treasury-logo" src="treasury-logo.png" alt="ตราสัญลักษณ์กรมธนารักษ์">
@@ -20,7 +20,28 @@
   <div class="top-actions"><span>⌂ หน้าหลัก</span><b>LIVE DATA · GOOGLE SHEETS</b></div>
 </header>
 
+<section class="data-status card" aria-live="polite">
+  <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
+  <div><strong>อัปเดตล่าสุด</strong><span id="lastUpdated">กำลังตรวจสอบ…</span></div>
+  <div><strong>แหล่งข้อมูล</strong><span>Google Sheets · ผู้ทรงคุณวุฒิ</span></div>
+</section>
+<section class="toolbar card">
+  <div><strong>เครื่องมือรายงาน</strong><small>ส่งออกข้อมูลตามตัวกรองที่เลือกอยู่</small></div>
+  <div class="toolbar-actions">
+    <button id="exportCsv" class="tool-btn">↓ ส่งออก Excel / CSV</button>
+    <button id="printReport" class="tool-btn secondary">▤ พิมพ์รายงาน</button>
+  </div>
+</section>
 <main class="dashboard">
+  <section class="card action-panel">
+    <div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
+    <div id="actionKpis" class="action-kpis"></div>
+  </section>
+  <section class="card alert-panel">
+    <div class="section-title"><span>⏰</span><h2>แจ้งเตือนกรรมการใกล้ครบกำหนด</h2><span id="expiryAlertCount" class="badge">0</span></div>
+    <p class="hint">แสดงรายการที่ครบกำหนดแล้ว หรือจะครบกำหนดภายใน 180 วัน</p>
+    <div id="expiryAlerts" class="expiry-alerts"></div>
+  </section>
   <section class="map-panel">
     <aside class="side-filters">
       <label class="search-wrap">🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" type="search" autocomplete="off" placeholder="พิมพ์ชื่อจังหวัด..."><div id="provinceSuggestions" class="suggestions" hidden></div></label>
@@ -53,11 +74,22 @@
     </div>
   </section>
 
+  <section class="card coverage-panel">
+    <div class="section-title"><span>🧩</span><h2>ความครอบคลุมของสาขาผู้ทรงคุณวุฒิ</h2></div>
+    <p class="hint">จำนวนกรรมการแยกตามสาขา และจำนวนจังหวัดที่มีสาขานั้น</p>
+    <div class="table-wrap"><table><thead><tr><th>สาขาเชี่ยวชาญ</th><th>จำนวนกรรมการ</th><th>จำนวนจังหวัด</th></tr></thead><tbody id="coverageTable"></tbody></table></div>
+  </section>
+  <section class="card quality-panel">
+    <div class="section-title"><span>✓</span><h2>ตรวจสอบคุณภาพข้อมูล</h2><span id="qualityCount" class="badge">0</span></div>
+    <p class="hint">ตรวจหารายการที่ข้อมูลไม่ครบ วันที่ไม่ถูกต้อง และวันครบกำหนดก่อนวันแต่งตั้ง</p>
+    <div id="qualitySummary" class="quality-summary"></div>
+    <div class="table-wrap"><table><thead><tr><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>ประเด็นที่ตรวจพบ</th></tr></thead><tbody id="qualityTable"></tbody></table></div>
+  </section>
   <section class="card full-table">
     <div class="section-title"><span>📑</span><h2>ตารางรายชื่อกรรมการทั้งหมด</h2><span id="rowCount" class="badge">0</span></div>
     <div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div>
   </section>
 </main>
 <script src="map-data.js?v=5.3.4-20260923"></script>
-<script src="app.js?v=6.3-20260930"></script>
+<script src="app.js?v=6.4-20261030"></script>
 </body></html>

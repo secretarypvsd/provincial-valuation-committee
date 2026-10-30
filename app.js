@@ -11,11 +11,11 @@ function filtered(){return DATA.filter(r=>{let ps=PSTATS[r.province]?.dupCount||
 function renderKpis(){let normal=DATA.filter(r=>statusOf(r)==='ปกติ').length,soon=DATA.filter(r=>statusOf(r)==='ใกล้หมดวาระ').length,expired=DATA.filter(r=>statusOf(r)==='หมดวาระแล้ว').length;$('kpis').innerHTML=[['กรรมการทั้งหมด',DATA.length],['สถานะปกติ',normal],['ใกล้หมดวาระ ≤ 1 ปี',soon],['หมดวาระแล้ว',expired]].map(x=>`<div class="kpi"><div class="n">${x[1].toLocaleString()}</div><div class="t">${x[0]}</div></div>`).join('')}
 function renderAlerts(){let a=DATA.filter(r=>statusOf(r)!=='ปกติ').sort((x,y)=>daysLeft(x)-daysLeft(y));$('alertCount').textContent=a.length;$('alerts').innerHTML=a.map(r=>`<div class="alert ${daysLeft(r)<0?'expired':''}"><b>${r.name}</b><br>${r.province} • ${fmt(r.expires)}<br><span>${daysLeft(r)<0?`เกินกำหนด ${Math.abs(daysLeft(r)).toLocaleString()} วัน`:`เหลือ ${daysLeft(r).toLocaleString()} วัน`}</span></div>`).join('')||'<span class="hint">ไม่มีรายการแจ้งเตือน</span>'}
 let MAP_GEO=null,MAP_LOADING=false;
-function mapColor(n){if(n>=4)return '#9400D3';if(n===3)return '#B22222';if(n===2)return '#FFFF00';return '#00FF00'}
+function mapColor(n){if(n>=4)return '#9400D3';if(n===3)return '#B22222';if(n===2)return '#FFFF00';return '#228B22'}
 function mapFallback(){let prov=[...new Set(DATA.map(r=>r.province))].sort((a,b)=>a.localeCompare(b,'th'));$('provinceMap').innerHTML='<div class="map-error">ไม่สามารถโหลดเส้นขอบแผนที่ได้ จึงแสดงรายชื่อจังหวัดแทน</div><div class="province-map-fallback">'+prov.map(p=>`<button class="province-chip ${state.province===p?'active':''}" data-p="${p}">${p}</button>`).join('')+'</div>';document.querySelectorAll('.province-chip').forEach(b=>b.onclick=()=>selectProvince(b.dataset.p))}
 function selectProvince(p){state.province=state.province===p?'':p;$('province').value=state.province;render()}
 function geoPaths(geom,project){let polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;return polys.map(poly=>poly.map(ring=>'M'+ring.map(([x,y])=>project(x,y).join(',')).join('L')+'Z').join('')).join('')}
-function drawThailandMap(geo){let el=$('provinceMap'),w=620,h=650,pad=18,pts=[],activeRows=filtered(),hasFilter=!!(state.province||state.search||state.expertise||state.appointedYear||state.status||state.duplicate),visibleProvinces=new Set(activeRows.map(r=>r.province));geo.features.forEach(f=>{let g=f.geometry,c=g.type==='Polygon'?[g.coordinates]:g.coordinates;c.forEach(poly=>poly.forEach(r=>r.forEach(p=>pts.push(p))))});let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),scale=Math.min((w-2*pad)/(maxX-minX),(h-2*pad)/(maxY-minY)),ox=(w-(maxX-minX)*scale)/2,oy=(h-(maxY-minY)*scale)/2;let project=(x,y)=>[ox+(x-minX)*scale,h-(oy+(y-minY)*scale)];let paths=geo.features.map(f=>{let p=f.properties||{},name=p.ADM1_TH||p.NL_NAME_1||p.name_th||'',n=PSTATS[name]?.dupCount||0,active=state.province===name,visible=!hasFilter||visibleProvinces.has(name);if(!visible)return '';return `<path class="thai-province${active?' selected':''}" data-p="${name}" d="${geoPaths(f.geometry,project)}" fill="${mapColor(n)}"><title>${name} • ${n?`มีผู้ทรงซ้ำ ${n} รายในสาขาเดียวกัน`:'ไม่มีการซ้ำซ้อนของสาขา'} — คลิกเพื่อกรองข้อมูล</title></path>`}).join('');el.innerHTML=`<div class="map-shell"><svg class="thailand-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="แผนที่ประเทศไทย 77 จังหวัด">${paths}</svg><div class="map-legend"><b>คำอธิบายสี</b><span><i style="background:#00FF00"></i>ไม่มีผู้ทรงซ้ำสาขา</span><span><i style="background:#FFFF00"></i>ผู้ทรงซ้ำ 2 รายในสาขาเดียวกัน</span><span><i style="background:#B22222"></i>ผู้ทรงซ้ำ 3 รายในสาขาเดียวกัน</span><span><i style="background:#9400D3"></i>ผู้ทรงซ้ำมากกว่า 3 รายในสาขาเดียวกัน</span></div><div class="map-selected">${state.province?'จังหวัดที่เลือก: <b>'+state.province+'</b>':'คลิกจังหวัดบนแผนที่เพื่อกรองข้อมูล'}</div></div>`;el.querySelectorAll('.thai-province').forEach(x=>x.onclick=()=>selectProvince(x.dataset.p))}
+function drawThailandMap(geo){let el=$('provinceMap'),w=620,h=650,pad=18,pts=[],activeRows=filtered(),hasFilter=!!(state.province||state.search||state.expertise||state.appointedYear||state.status||state.duplicate),visibleProvinces=new Set(activeRows.map(r=>r.province));geo.features.forEach(f=>{let g=f.geometry,c=g.type==='Polygon'?[g.coordinates]:g.coordinates;c.forEach(poly=>poly.forEach(r=>r.forEach(p=>pts.push(p))))});let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys),scale=Math.min((w-2*pad)/(maxX-minX),(h-2*pad)/(maxY-minY)),ox=(w-(maxX-minX)*scale)/2,oy=(h-(maxY-minY)*scale)/2;let project=(x,y)=>[ox+(x-minX)*scale,h-(oy+(y-minY)*scale)];let paths=geo.features.map(f=>{let p=f.properties||{},name=p.ADM1_TH||p.NL_NAME_1||p.name_th||'',n=PSTATS[name]?.dupCount||0,active=state.province===name,visible=!hasFilter||visibleProvinces.has(name);if(!visible)return '';return `<path class="thai-province${active?' selected':''}" data-p="${name}" d="${geoPaths(f.geometry,project)}" fill="${mapColor(n)}"><title>${name} • ${n?`มีผู้ทรงซ้ำ ${n} รายในสาขาเดียวกัน`:'ไม่มีผู้ทรงซ้ำสาขา'} — คลิกเพื่อกรองข้อมูล</title></path>`}).join('');el.innerHTML=`<div class="map-shell"><svg class="thailand-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="แผนที่ประเทศไทย 77 จังหวัด">${paths}</svg><div class="map-legend"><b>คำอธิบายสี</b><span><i style="background:#228B22"></i>ไม่มีผู้ทรงซ้ำสาขา</span><span><i style="background:#FFFF00"></i>ผู้ทรงซ้ำ 2 รายในสาขาเดียวกัน</span><span><i style="background:#B22222"></i>ผู้ทรงซ้ำ 3 รายในสาขาเดียวกัน</span><span><i style="background:#9400D3"></i>ผู้ทรงซ้ำมากกว่า 3 รายในสาขาเดียวกัน</span></div><div class="map-selected">${state.province?'จังหวัดที่เลือก: <b>'+state.province+'</b>':'คลิกจังหวัดบนแผนที่เพื่อกรองข้อมูล'}</div></div>`;el.querySelectorAll('.thai-province').forEach(x=>x.onclick=()=>selectProvince(x.dataset.p))}
 function renderMap(){
   if(!MAP_GEO) MAP_GEO=window.THAILAND_GEOJSON||null;
   if(MAP_GEO && Array.isArray(MAP_GEO.features) && MAP_GEO.features.length===77){
@@ -58,10 +58,77 @@ function renderDup(rows=DATA){
 function renderYears(rows){let m={};rows.forEach(r=>{let a=new Date(r.appointed).getFullYear()+543,e=new Date(r.expires).getFullYear()+543;(m[a]??={a:0,e:0}).a++;(m[e]??={a:0,e:0}).e++});let max=Math.max(1,...Object.values(m).flatMap(x=>[x.a,x.e]));$('yearChart').innerHTML=Object.keys(m).sort().map(y=>`<div class="bar-row"><span>พ.ศ. ${y}</span><div><div class="bar-track" title="แต่งตั้ง ${m[y].a}"><div class="bar-fill" style="width:${m[y].a/max*100}%"></div></div><div class="bar-track" style="margin-top:3px" title="ครบวาระ ${m[y].e}"><div class="bar-fill" style="width:${m[y].e/max*100}%;background:linear-gradient(90deg,#d9b8dc,#e5c5b4)"></div></div></div><b>${m[y].a}/${m[y].e}</b></div>`).join('')+'<p class="hint">ตัวเลขด้านขวา = แต่งตั้ง / ครบวาระ</p>'}
 function renderExpert(rows){let m={};rows.forEach(r=>m[normExp(r.expertise)]=(m[normExp(r.expertise)]||0)+1);let colors=['#9fcdb6','#a8c9dc','#c7b5dd','#e3b6a4'];let total=Object.values(m).reduce((a,b)=>a+b,0)||1,acc=0,stops=[];Object.values(m).forEach((v,i)=>{let s=acc/total*360;acc+=v;let e=acc/total*360;stops.push(`${colors[i%colors.length]} ${s}deg ${e}deg`)});$('expertChart').innerHTML=`<div class="donut-wrap"><div class="donut" style="background:conic-gradient(${stops.join(',')})"></div><div class="legend">${Object.entries(m).map(([k,v],i)=>`<div><span class="dot" style="background:${colors[i%colors.length]}"></span>${k.replace('ด้าน','')} <b>${v}</b> (${(v/total*100).toFixed(1)}%)</div>`).join('')}</div></div>`}
 function renderTable(rows){$('rowCount').textContent=rows.length;$('mainTable').innerHTML=rows.map((r,i)=>{let s=statusOf(r),d=daysLeft(r),cls=s==='ปกติ'?'normal':s==='ใกล้หมดวาระ'?'soon':'expired';return `<tr><td>${i+1}</td><td>${r.province}</td><td><b>${r.name}</b></td><td>${normExp(r.expertise)}</td><td>${fmt(r.appointed)}</td><td>${fmt(r.expires)}</td><td>${d.toLocaleString()}</td><td><span class="status-pill status-${cls}">${s}</span></td></tr>`}).join('')||'<tr><td colspan="8">ไม่พบข้อมูลตามตัวกรอง</td></tr>'}
-function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows)}
+
+function renderActionKpis(rows){
+  const now=TODAY.getTime(), in90=90*86400000, in180=180*86400000;
+  const due90=rows.filter(r=>{const d=new Date(r.expires+'T00:00:00').getTime()-now;return Number.isFinite(d)&&d>=0&&d<=in90}).length;
+  const due180=rows.filter(r=>{const d=new Date(r.expires+'T00:00:00').getTime()-now;return Number.isFinite(d)&&d>=0&&d<=in180}).length;
+  const expired=rows.filter(r=>statusOf(r)==='หมดวาระแล้ว').length;
+  const dupProvinces=[...new Set(rows.map(r=>r.province))].filter(p=>(PSTATS[p]?.dupCount||0)>=3).length;
+  $('actionKpis').innerHTML=[
+    [due90,'ครบกำหนดใน 90 วัน','urgent'],
+    [due180,'ครบกำหนดใน 180 วัน','soon'],
+    [expired,'ครบกำหนดแล้ว','expired'],
+    [dupProvinces,'จังหวัดซ้ำสาขา 3 รายขึ้นไป','duplicate']
+  ].map(x=>`<div class="action-kpi ${x[2]}"><strong>${x[0].toLocaleString()}</strong><span>${x[1]}</span></div>`).join('');
+}
+function renderExpiryAlerts(rows){
+  const list=rows.filter(r=>{const d=daysLeft(r);return Number.isFinite(d)&&d<=180}).sort((a,b)=>daysLeft(a)-daysLeft(b));
+  $('expiryAlertCount').textContent=list.length;
+  $('expiryAlerts').innerHTML=list.slice(0,30).map(r=>{
+    const d=daysLeft(r), cls=d<0?'expired':d<=90?'urgent':'soon';
+    const msg=d<0?`ครบกำหนดแล้ว ${Math.abs(d)} วัน`:d===0?'ครบกำหนดวันนี้':`เหลือ ${d} วัน`;
+    return `<div class="expiry-item ${cls}"><div><strong>${r.name||'ไม่ระบุชื่อ'}</strong><span>${r.province||'ไม่ระบุจังหวัด'} · ${normExp(r.expertise||'ไม่ระบุสาขา')}</span></div><div class="expiry-date"><b>${msg}</b><span>${fmt(r.expires)}</span></div></div>`;
+  }).join('') || '<div class="empty-state">ไม่มีรายการครบกำหนดภายใน 180 วันตามข้อมูลที่กรอง</div>';
+}
+function renderCoverage(rows){
+  const m={};
+  rows.forEach(r=>{const e=normExp(r.expertise||'ไม่ระบุสาขา');if(!m[e])m[e]={people:0,provinces:new Set()};m[e].people++;m[e].provinces.add(r.province)});
+  $('coverageTable').innerHTML=Object.entries(m).sort((a,b)=>b[1].people-a[1].people).map(([e,v])=>`<tr><td>${e}</td><td>${v.people.toLocaleString()}</td><td>${v.provinces.size.toLocaleString()}</td></tr>`).join('')||'<tr><td colspan="3">ไม่มีข้อมูล</td></tr>';
+}
+function validateData(rows){
+  const issues=[];
+  rows.forEach(r=>{
+    const found=[];
+    if(!String(r.province||'').trim())found.push('ไม่ระบุจังหวัด');
+    if(!String(r.name||'').trim())found.push('ไม่ระบุชื่อ-สกุล');
+    if(!String(r.expertise||'').trim())found.push('ไม่ระบุสาขาเชี่ยวชาญ');
+    const a=r.appointed?new Date(r.appointed+'T00:00:00'):null;
+    const e=r.expires?new Date(r.expires+'T00:00:00'):null;
+    if(!r.appointed||!a||!Number.isFinite(a.getTime()))found.push('วันที่แต่งตั้งไม่ถูกต้อง/ไม่มีข้อมูล');
+    if(!r.expires||!e||!Number.isFinite(e.getTime()))found.push('วันที่ครบกำหนดไม่ถูกต้อง/ไม่มีข้อมูล');
+    if(a&&e&&Number.isFinite(a.getTime())&&Number.isFinite(e.getTime())&&e<a)found.push('วันครบกำหนดก่อนวันแต่งตั้ง');
+    if(found.length)issues.push({r,found});
+  });
+  $('qualityCount').textContent=issues.length;
+  $('qualitySummary').innerHTML=issues.length
+    ? `<span class="quality-warning">พบ ${issues.length.toLocaleString()} รายการที่ควรตรวจสอบ</span>`
+    : '<span class="quality-ok">ไม่พบปัญหาตามรายการตรวจสอบพื้นฐาน</span>';
+  $('qualityTable').innerHTML=issues.slice(0,50).map(x=>`<tr><td>${x.r.province||'—'}</td><td>${x.r.name||'—'}</td><td>${x.found.join(' · ')}</td></tr>`).join('')||'<tr><td colspan="3">ไม่พบประเด็นที่ตรวจสอบ</td></tr>';
+}
+function updateDataStatus(ok,message){
+  const el=$('dataStatus');
+  el.textContent=message;
+  el.className='status-pill '+(ok?'status-normal':'status-expired');
+  $('lastUpdated').textContent=new Date().toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'});
+}
+function exportRows(){
+  const rows=filtered();
+  const cols=[['จังหวัด','province'],['ชื่อ-สกุล','name'],['สาขาเชี่ยวชาญ','expertise'],['วันที่แต่งตั้ง','appointed'],['วันที่ครบกำหนด','expires'],['จำนวนวันคงเหลือ','days'],['สถานะ','status']];
+  const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+  const lines=[cols.map(x=>quote(x[0])).join(',')];
+  rows.forEach(r=>lines.push(cols.map(([label,key])=>quote(key==='days'?daysLeft(r):key==='status'?statusOf(r):key==='expertise'?normExp(r.expertise):key==='appointed'||key==='expires'?fmt(r[key]):r[key])).join(',')));
+  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=`รายชื่อกรรมการผู้ทรงคุณวุฒิ_${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+function printReport(){window.print()}
+
+function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows);renderActionKpis(rows);renderExpiryAlerts(rows);renderCoverage(rows);validateData(rows)}
 function clearAll(){Object.keys(state).forEach(k=>state[k]='');['searchProvince','province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).value='');render()}
-fillSelects();render();
-$('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;
+fillSelects();render();updateDataStatus(true,'เชื่อมต่อสำเร็จ');
+$('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;$('exportCsv').onclick=exportRows;$('printReport').onclick=printReport;
 
 }
 
@@ -71,4 +138,4 @@ const GOOGLE_SHEET_CSV=`https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID
 function parseCSV(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&q&&n==='"'){cell+='"';i++;continue}if(c==='"'){q=!q;continue}if(c===','&&!q){row.push(cell);cell='';continue}if((c==='\n'||c==='\r')&&!q){if(c==='\r'&&n==='\n')i++;row.push(cell);if(row.some(v=>v!==''))rows.push(row);row=[];cell='';continue}cell+=c}if(cell||row.length){row.push(cell);rows.push(row)}return rows}
 function sheetDate(v){if(!v)return '';v=String(v).trim();let m=v.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m){let y=+m[3];if(y>2400)y-=543;return `${y}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`}const months={มกราคม:1,กุมภาพันธ์:2,มีนาคม:3,เมษายน:4,พฤษภาคม:5,มิถุนายน:6,กรกฎาคม:7,สิงหาคม:8,กันยายน:9,ตุลาคม:10,พฤศจิกายน:11,ธันวาคม:12};let c=v.replace(/^วัน[^,]*,\s*/,'').replace(/,/g,' ').replace(/\s+/g,' ').trim(),a=c.split(' '),i=a.findIndex(x=>months[x]);if(i>=0){let d=+(a[i+1]||0),y=+(a[i+2]||0);if(y>2400)y-=543;if(d&&y)return `${y}-${String(months[a[i]]).padStart(2,'0')}-${String(d).padStart(2,'0')}`}return ''}
 async function loadLiveData(){const r=await fetch(GOOGLE_SHEET_CSV,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const rows=parseCSV(await r.text());const data=rows.slice(1).filter(r=>r[1]&&r[2]).map((r,i)=>({id:Number(r[0])||i+1,province:(r[1]||'').trim(),name:(r[2]||'').replace(/\s+/g,' ').trim(),qualification:(r[3]||'').replace(/\s+/g,' ').trim(),expertise:(r[4]||'').replace(/\s+/g,' ').trim(),appointed:sheetDate(r[5]),expires:sheetDate(r[6])}));if(!data.length)throw new Error('No rows');return data}
-loadLiveData().then(bootDashboard).catch(err=>{console.error(err);document.body.insertAdjacentHTML('afterbegin','<div style="position:fixed;z-index:10000;top:8px;left:50%;transform:translateX(-50%);background:#fff3cd;color:#664d03;border:1px solid #ffecb5;padding:10px 16px;border-radius:10px;font:14px sans-serif">ไม่สามารถโหลดข้อมูล Google Sheet ได้ กรุณาตรวจสอบสิทธิ์การแชร์</div>')});
+loadLiveData().then(bootDashboard).catch(err=>{console.error(err);const status=document.getElementById('dataStatus');if(status){status.textContent='เชื่อมต่อ Google Sheets ไม่สำเร็จ';status.className='status-pill status-expired';}const last=document.getElementById('lastUpdated');if(last)last.textContent='ไม่สามารถยืนยันเวลาการดึงข้อมูลได้';document.body.insertAdjacentHTML('afterbegin','<div style="position:relative;z-index:10000;background:#fff3cd;color:#664d03;border:1px solid #ffecb5;padding:10px 16px;font:14px sans-serif">ไม่สามารถโหลดข้อมูล Google Sheet ได้ กรุณาตรวจสอบสิทธิ์การแชร์และการเชื่อมต่ออินเทอร์เน็ต</div>')});
