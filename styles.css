@@ -552,3 +552,33 @@ body:before{
 @media(max-width:1100px){.expiry-timeline{grid-template-columns:repeat(6,minmax(0,1fr))}.timeline-bar-track{height:80px}}
 @media(max-width:600px){.expiry-timeline-panel{margin-left:12px;margin-right:12px;padding:14px}.expiry-timeline{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.timeline-bar-track{height:70px}.timeline-summary{gap:8px;flex-direction:column}}
 @media print{.expiry-timeline-panel{display:block!important}.expiry-timeline{grid-template-columns:repeat(6,minmax(0,1fr))}.timeline-bar-track{height:45px}.timeline-details .table-wrap{max-height:none;overflow:visible}}
+
+
+/* V6.8: put the main map and executive summary at the top of the dashboard */
+.dashboard > .map-panel { grid-column: 1; grid-row: 1; }
+.dashboard > .right-column { grid-column: 2; grid-row: 1; }
+.dashboard > .action-alert-panel,
+.dashboard > .expiry-timeline-panel,
+.dashboard > .coverage-panel,
+.dashboard > .quality-panel,
+.dashboard > .full-table {
+  grid-column: 1 / -1;
+}
+.dashboard > .action-alert-panel,
+.dashboard > .expiry-timeline-panel {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .dashboard > .map-panel,
+  .dashboard > .right-column,
+  .dashboard > .action-alert-panel,
+  .dashboard > .expiry-timeline-panel,
+  .dashboard > .coverage-panel,
+  .dashboard > .quality-panel,
+  .dashboard > .full-table {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}

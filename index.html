@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</title>
-<link rel="stylesheet" href="styles.css?v=6.7.1-20261030">
+<link rel="stylesheet" href="styles.css?v=6.8-20261030">
 </head>
-<body><div class="build-badge">V6.4 EXECUTIVE TOOLS</div>
+<body><div class="build-badge">V6.8 DASHBOARD TOP LAYOUT</div>
 <header class="topbar">
   <div class="brand">
     <img class="treasury-logo" src="treasury-logo.png" alt="ตราสัญลักษณ์กรมธนารักษ์">
@@ -23,30 +23,7 @@
 
 
 <main class="dashboard">
-  <section class="card action-alert-panel">
-  <div class="combined-panels-grid">
-    <div class="combined-kpi-section">
-<div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
-    <div id="actionKpis" class="action-kpis"></div>
-    </div>
-    <div class="combined-alert-section">
-<div class="section-title"><span>⏰</span><h2>แจ้งเตือนกรรมการใกล้ครบกำหนด</h2><span id="expiryAlertCount" class="badge">0</span></div>
-    <p class="hint">แสดงรายการที่ครบกำหนดแล้ว หรือจะครบกำหนดภายใน 180 วัน</p>
-    <div id="expiryAlerts" class="expiry-alerts"></div>
-    </div>
-  </div>
-</section>
-
-<section class="card expiry-timeline-panel">
-  <div class="section-title"><span>📅</span><h2>ไทม์ไลน์กรรมการครบวาระล่วงหน้า 12 เดือน</h2></div>
-  <p class="hint">แสดงจำนวนกรรมการที่ครบกำหนดในแต่ละเดือน นับจากเดือนปัจจุบัน โดยอิงวันที่ครบกำหนดจาก Google Sheets</p>
-  <div id="expiryTimelineSummary" class="timeline-summary"></div>
-  <div id="expiryTimeline" class="expiry-timeline" aria-label="ไทม์ไลน์กรรมการครบวาระ 12 เดือน"></div>
-  <div class="timeline-footnote">เลือกเดือนเพื่อดูรายชื่อกรรมการที่ครบกำหนดในเดือนนั้น</div>
-  <div id="expiryTimelineDetails" class="timeline-details"></div>
-</section>
-
-  <section class="map-panel">
+<section class="map-panel">
     <aside class="side-filters">
       <label class="search-wrap">🔍 ค้นหาชื่อจังหวัด<input id="searchProvince" type="search" autocomplete="off" placeholder="พิมพ์ชื่อจังหวัด..."><div id="provinceSuggestions" class="suggestions" hidden></div></label>
       <label>📍 เลือกจังหวัด<select id="province"><option value="">ทุกจังหวัด</option></select></label>
@@ -65,8 +42,7 @@
       <div id="provinceMap" class="province-map"></div>
     </div>
   </section>
-
-  <section class="right-column">
+<section class="right-column">
     <div class="card summary-panel">
       <div class="section-title"><span>📊</span><h2>สรุปข้อมูลกรรมการผู้ทรงคุณวุฒิฯ</h2></div><div id="quickKpis" class="quick-kpis"></div>
       <div id="dupSummary" class="summary-cards"></div>
@@ -77,25 +53,45 @@
       <div class="card"><div class="section-title"><span>🥧</span><h2>สัดส่วนแยกตามสาขาเชี่ยวชาญ</h2></div><div id="expertChart" class="chart"></div></div>
     </div>
   </section>
-
-  <section class="card coverage-panel">
+<section class="card action-alert-panel">
+  <div class="combined-panels-grid">
+    <div class="combined-kpi-section">
+<div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
+    <div id="actionKpis" class="action-kpis"></div>
+    </div>
+    <div class="combined-alert-section">
+<div class="section-title"><span>⏰</span><h2>แจ้งเตือนกรรมการใกล้ครบกำหนด</h2><span id="expiryAlertCount" class="badge">0</span></div>
+    <p class="hint">แสดงรายการที่ครบกำหนดแล้ว หรือจะครบกำหนดภายใน 180 วัน</p>
+    <div id="expiryAlerts" class="expiry-alerts"></div>
+    </div>
+  </div>
+</section>
+<section class="card expiry-timeline-panel">
+  <div class="section-title"><span>📅</span><h2>ไทม์ไลน์กรรมการครบวาระล่วงหน้า 12 เดือน</h2></div>
+  <p class="hint">แสดงจำนวนกรรมการที่ครบกำหนดในแต่ละเดือน นับจากเดือนปัจจุบัน โดยอิงวันที่ครบกำหนดจาก Google Sheets</p>
+  <div id="expiryTimelineSummary" class="timeline-summary"></div>
+  <div id="expiryTimeline" class="expiry-timeline" aria-label="ไทม์ไลน์กรรมการครบวาระ 12 เดือน"></div>
+  <div class="timeline-footnote">เลือกเดือนเพื่อดูรายชื่อกรรมการที่ครบกำหนดในเดือนนั้น</div>
+  <div id="expiryTimelineDetails" class="timeline-details"></div>
+</section>
+<section class="card coverage-panel">
     <div class="section-title"><span>🧩</span><h2>ความครอบคลุมของสาขาผู้ทรงคุณวุฒิ</h2></div>
     <p class="hint">จำนวนกรรมการแยกตามสาขา และจำนวนจังหวัดที่มีสาขานั้น</p>
     <div class="table-wrap"><table><thead><tr><th>สาขาเชี่ยวชาญ</th><th>จำนวนกรรมการ</th><th>จำนวนจังหวัด</th></tr></thead><tbody id="coverageTable"></tbody></table></div>
   </section>
-  <section class="card quality-panel">
+<section class="card quality-panel">
     <div class="section-title"><span>✓</span><h2>ตรวจสอบคุณภาพข้อมูล</h2><span id="qualityCount" class="badge">0</span></div>
     <p class="hint">ตรวจหารายการที่ข้อมูลไม่ครบ วันที่ไม่ถูกต้อง และวันครบกำหนดก่อนวันแต่งตั้ง</p>
     <div id="qualitySummary" class="quality-summary"></div>
     <div class="table-wrap"><table><thead><tr><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>ประเด็นที่ตรวจพบ</th></tr></thead><tbody id="qualityTable"></tbody></table></div>
   </section>
-  <section class="card full-table">
+<section class="card full-table">
     <div class="section-title"><span>📑</span><h2>ตารางรายชื่อกรรมการทั้งหมด</h2><span id="rowCount" class="badge">0</span></div>
     <div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div>
   </section>
 </main>
 <script src="map-data.js?v=5.3.4-20260923"></script>
-<script src="app.js?v=6.7.1-20261030"></script>
+<script src="app.js?v=6.8-20261030"></script>
 
 <section class="data-status card" aria-live="polite">
   <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
