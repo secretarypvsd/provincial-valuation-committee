@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</title>
-<link rel="stylesheet" href="styles.css?v=6.8-20261030">
+<link rel="stylesheet" href="styles.css?v=6.9-20261030">
 </head>
-<body><div class="build-badge">V6.8 DASHBOARD TOP LAYOUT</div>
+<body><div class="build-badge">V6.9 SIMPLIFIED EXECUTIVE DASHBOARD</div>
 <header class="topbar">
   <div class="brand">
     <img class="treasury-logo" src="treasury-logo.png" alt="ตราสัญลักษณ์กรมธนารักษ์">
@@ -45,12 +45,17 @@
 <section class="right-column">
     <div class="card summary-panel">
       <div class="section-title"><span>📊</span><h2>สรุปข้อมูลกรรมการผู้ทรงคุณวุฒิฯ</h2></div><div id="quickKpis" class="quick-kpis"></div>
-      <div id="dupSummary" class="summary-cards"></div>
-      <div class="table-wrap small"><table><thead><tr><th>จังหวัด</th><th>สถานะ</th><th>สาขาที่ซ้ำ (จำนวน)</th></tr></thead><tbody id="dupTable"></tbody></table></div>
-    </div>
-    <div class="lower-grid">
+      <details class="dashboard-details summary-details">
+        <summary>ดูรายละเอียดสาขาซ้ำและกราฟ</summary>
+        <div class="disclosure-content">
+          <div id="dupSummary" class="summary-cards"></div>
+          <div class="table-wrap small"><table><thead><tr><th>จังหวัด</th><th>สถานะ</th><th>สาขาที่ซ้ำ (จำนวน)</th></tr></thead><tbody id="dupTable"></tbody></table></div>
+          <div class="lower-grid">
       <div class="card"><div class="section-title"><span>📅</span><h2>ภาพรวมปีที่แต่งตั้งและปีที่ครบวาระ</h2></div><div id="yearChart" class="chart"></div></div>
       <div class="card"><div class="section-title"><span>🥧</span><h2>สัดส่วนแยกตามสาขาเชี่ยวชาญ</h2></div><div id="expertChart" class="chart"></div></div>
+    </div>
+        </div>
+      </details>
     </div>
   </section>
 <section class="card action-alert-panel">
@@ -74,6 +79,13 @@
   <div class="timeline-footnote">เลือกเดือนเพื่อดูรายชื่อกรรมการที่ครบกำหนดในเดือนนั้น</div>
   <div id="expiryTimelineDetails" class="timeline-details"></div>
 </section>
+
+
+
+
+<details class="dashboard-details more-details">
+  <summary>รายละเอียดเพิ่มเติม: ความครอบคลุมสาขา · คุณภาพข้อมูล · รายชื่อกรรมการทั้งหมด</summary>
+  <div class="disclosure-content detail-panels">
 <section class="card coverage-panel">
     <div class="section-title"><span>🧩</span><h2>ความครอบคลุมของสาขาผู้ทรงคุณวุฒิ</h2></div>
     <p class="hint">จำนวนกรรมการแยกตามสาขา และจำนวนจังหวัดที่มีสาขานั้น</p>
@@ -89,9 +101,12 @@
     <div class="section-title"><span>📑</span><h2>ตารางรายชื่อกรรมการทั้งหมด</h2><span id="rowCount" class="badge">0</span></div>
     <div class="table-wrap"><table><thead><tr><th>#</th><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันแต่งตั้ง</th><th>วันครบวาระ</th><th>คงเหลือ (วัน)</th><th>สถานะ</th></tr></thead><tbody id="mainTable"></tbody></table></div>
   </section>
+  </div>
+</details>
+
 </main>
 <script src="map-data.js?v=5.3.4-20260923"></script>
-<script src="app.js?v=6.8-20261030"></script>
+<script src="app.js?v=6.9-20261030"></script>
 
 <section class="data-status card" aria-live="polite">
   <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
