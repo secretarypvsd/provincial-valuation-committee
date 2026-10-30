@@ -410,3 +410,48 @@ body:before{
 @media(max-width:900px){.data-status,.toolbar,.action-panel,.alert-panel,.coverage-panel,.quality-panel{margin-left:12px;margin-right:12px}.data-status{align-items:flex-start;flex-direction:column}.action-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.expiry-alerts{grid-template-columns:1fr}}
 @media(max-width:600px){.toolbar{align-items:flex-start;flex-direction:column}.toolbar-actions{width:100%}.tool-btn{flex:1}.action-kpis{grid-template-columns:1fr 1fr}.action-kpi strong{font-size:22px}.expiry-item{align-items:flex-start;flex-direction:column}.expiry-date{text-align:left}}
 @media print{body{background:#fff!important}body:before,.topbar,.side-filters,.toolbar,.tool-btn,.map-panel,.build-badge{display:none!important}.dashboard{display:block;max-width:none;padding:0}.card,.data-status{box-shadow:none;border:1px solid #ccc;margin:8px 0;break-inside:avoid}.full-table .table-wrap,.coverage-panel .table-wrap,.quality-panel .table-wrap{max-height:none;overflow:visible}.data-status{display:flex}.action-panel,.alert-panel,.coverage-panel,.quality-panel,.full-table{display:block!important}table{font-size:10pt}th{background:#eee!important;color:#000!important}}
+
+
+/* V6.5 layout refinements */
+.alert-panel .expiry-alerts {
+  display: block;
+  max-height: 360px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: 2px 8px 2px 2px;
+  scrollbar-gutter: stable;
+}
+.alert-panel .expiry-item {
+  margin-bottom: 8px;
+}
+.alert-panel .expiry-item:last-child {
+  margin-bottom: 0;
+}
+.alert-panel .expiry-alerts::-webkit-scrollbar {
+  width: 9px;
+}
+.alert-panel .expiry-alerts::-webkit-scrollbar-track {
+  background: #eef2f4;
+  border-radius: 999px;
+}
+.alert-panel .expiry-alerts::-webkit-scrollbar-thumb {
+  background: #9aabb5;
+  border-radius: 999px;
+  border: 2px solid #eef2f4;
+}
+.alert-panel .expiry-alerts {
+  scrollbar-width: thin;
+  scrollbar-color: #9aabb5 #eef2f4;
+}
+@media (max-width: 600px) {
+  .alert-panel .expiry-alerts { max-height: 300px; }
+}
+/* Status and report toolbar now live at the bottom of the page */
+.data-status, .toolbar {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+@media print {
+  .data-status, .toolbar { display: none !important; }
+}

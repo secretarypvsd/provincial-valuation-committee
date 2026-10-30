@@ -20,18 +20,8 @@
   <div class="top-actions"><span>⌂ หน้าหลัก</span><b>LIVE DATA · GOOGLE SHEETS</b></div>
 </header>
 
-<section class="data-status card" aria-live="polite">
-  <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
-  <div><strong>อัปเดตล่าสุด</strong><span id="lastUpdated">กำลังตรวจสอบ…</span></div>
-  <div><strong>แหล่งข้อมูล</strong><span>Google Sheets · ผู้ทรงคุณวุฒิ</span></div>
-</section>
-<section class="toolbar card">
-  <div><strong>เครื่องมือรายงาน</strong><small>ส่งออกข้อมูลตามตัวกรองที่เลือกอยู่</small></div>
-  <div class="toolbar-actions">
-    <button id="exportCsv" class="tool-btn">↓ ส่งออก Excel / CSV</button>
-    <button id="printReport" class="tool-btn secondary">▤ พิมพ์รายงาน</button>
-  </div>
-</section>
+
+
 <main class="dashboard">
   <section class="card action-panel">
     <div class="section-title"><span>🧭</span><h2>สรุปประเด็นที่ต้องดำเนินการ</h2></div>
@@ -92,4 +82,17 @@
 </main>
 <script src="map-data.js?v=5.3.4-20260923"></script>
 <script src="app.js?v=6.4-20261030"></script>
+
+<section class="data-status card" aria-live="polite">
+  <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
+  <div><strong>อัปเดตล่าสุด</strong><span id="lastUpdated">กำลังตรวจสอบ…</span></div>
+  <div><strong>แหล่งข้อมูล</strong><span>Google Sheets · ผู้ทรงคุณวุฒิ</span></div>
+</section>
+<section class="toolbar card">
+  <div><strong>เครื่องมือรายงาน</strong><small>ส่งออกข้อมูลตามตัวกรองที่เลือกอยู่</small></div>
+  <div class="toolbar-actions">
+    <button id="exportCsv" class="tool-btn">↓ ส่งออก Excel / CSV</button>
+    <button id="printReport" class="tool-btn secondary">▤ พิมพ์รายงาน</button>
+  </div>
+</section>
 </body></html>
