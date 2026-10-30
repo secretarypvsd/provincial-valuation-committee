@@ -59,6 +59,49 @@ function renderYears(rows){let m={};rows.forEach(r=>{let a=new Date(r.appointed)
 function renderExpert(rows){let m={};rows.forEach(r=>m[normExp(r.expertise)]=(m[normExp(r.expertise)]||0)+1);let colors=['#9fcdb6','#a8c9dc','#c7b5dd','#e3b6a4'];let total=Object.values(m).reduce((a,b)=>a+b,0)||1,acc=0,stops=[];Object.values(m).forEach((v,i)=>{let s=acc/total*360;acc+=v;let e=acc/total*360;stops.push(`${colors[i%colors.length]} ${s}deg ${e}deg`)});$('expertChart').innerHTML=`<div class="donut-wrap"><div class="donut" style="background:conic-gradient(${stops.join(',')})"></div><div class="legend">${Object.entries(m).map(([k,v],i)=>`<div><span class="dot" style="background:${colors[i%colors.length]}"></span>${k.replace('ด้าน','')} <b>${v}</b> (${(v/total*100).toFixed(1)}%)</div>`).join('')}</div></div>`}
 function renderTable(rows){$('rowCount').textContent=rows.length;$('mainTable').innerHTML=rows.map((r,i)=>{let s=statusOf(r),d=daysLeft(r),cls=s==='ปกติ'?'normal':s==='ใกล้หมดวาระ'?'soon':'expired';return `<tr><td>${i+1}</td><td>${r.province}</td><td><b>${r.name}</b></td><td>${normExp(r.expertise)}</td><td>${fmt(r.appointed)}</td><td>${fmt(r.expires)}</td><td>${d.toLocaleString()}</td><td><span class="status-pill status-${cls}">${s}</span></td></tr>`}).join('')||'<tr><td colspan="8">ไม่พบข้อมูลตามตัวกรอง</td></tr>'}
 
+
+function renderExpiryTimeline(rows){
+  const monthNames=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  const now=new Date();
+  const base=new Date(now.getFullYear(),now.getMonth(),1);
+  const months=[];
+  for(let i=0;i<12;i++){
+    const d=new Date(base.getFullYear(),base.getMonth()+i,1);
+    months.push({year:d.getFullYear(),month:d.getMonth(),label:monthNames[d.getMonth()],yearLabel:String(d.getFullYear()+543),key:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`,items:[]});
+  }
+  rows.forEach(r=>{
+    if(!r.expires)return;
+    const d=new Date(r.expires+'T00:00:00');
+    if(!Number.isFinite(d.getTime()))return;
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    const m=months.find(x=>x.key===key);
+    if(m)m.items.push(r);
+  });
+  const total=months.reduce((n,m)=>n+m.items.length,0);
+  const peak=Math.max(1,...months.map(m=>m.items.length));
+  $('expiryTimelineSummary').innerHTML=`<span>กรรมการครบวาระใน 12 เดือนข้างหน้า <strong>${total.toLocaleString()} ราย</strong></span><span>เดือนที่มีจำนวนสูงสุด <strong>${Math.max(...months.map(m=>m.items.length)).toLocaleString()} ราย</strong></span>`;
+  $('expiryTimeline').innerHTML=months.map((m,i)=>{
+    const count=m.items.length;
+    const height=count?Math.max(8,Math.round(count/peak*100)):3;
+    const cls=count===0?'empty':count>=5?'high':count>=3?'medium':'low';
+    return `<button type="button" class="timeline-month ${cls}" data-month="${m.key}" aria-label="${m.label} พ.ศ. ${m.yearLabel} ครบวาระ ${count} ราย">
+      <span class="timeline-count">${count}</span>
+      <span class="timeline-bar-track"><span class="timeline-bar" style="height:${height}%"></span></span>
+      <span class="timeline-month-label">${m.label}</span>
+      <span class="timeline-year-label">${m.yearLabel}</span>
+    </button>`;
+  }).join('');
+  const showMonth=(key)=>{
+    const m=months.find(x=>x.key===key);
+    if(!m)return;
+    document.querySelectorAll('.timeline-month').forEach(el=>el.classList.toggle('selected',el.dataset.month===key));
+    $('expiryTimelineDetails').innerHTML=`<div class="timeline-detail-heading"><strong>ครบวาระเดือน${monthNames[m.month]} พ.ศ. ${m.yearLabel}</strong><span>${m.items.length} ราย</span></div>`+
+      (m.items.length?`<div class="table-wrap"><table><thead><tr><th>จังหวัด</th><th>ชื่อ-สกุล</th><th>สาขาเชี่ยวชาญ</th><th>วันที่ครบกำหนด</th></tr></thead><tbody>${m.items.slice().sort((a,b)=>String(a.expires).localeCompare(String(b.expires))).map(r=>`<tr><td>${r.province||'—'}</td><td>${r.name||'—'}</td><td>${normExp(r.expertise||'—')}</td><td>${fmt(r.expires)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty-state">ไม่มีกรรมการครบกำหนดในเดือนนี้ตามข้อมูลที่กรอง</div>');
+  };
+  document.querySelectorAll('.timeline-month').forEach(el=>el.addEventListener('click',()=>showMonth(el.dataset.month)));
+  showMonth(months.find(m=>m.items.length>0)?.key||months[0].key);
+}
+
 function renderActionKpis(rows){
   const now=TODAY.getTime(), in90=90*86400000, in180=180*86400000;
   const due90=rows.filter(r=>{const d=new Date(r.expires+'T00:00:00').getTime()-now;return Number.isFinite(d)&&d>=0&&d<=in90}).length;
@@ -125,7 +168,7 @@ function exportRows(){
 }
 function printReport(){window.print()}
 
-function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows);renderActionKpis(rows);renderExpiryAlerts(rows);renderCoverage(rows);validateData(rows)}
+function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows);renderActionKpis(rows);renderExpiryAlerts(rows);renderCoverage(rows);validateData(rows);renderExpiryTimeline(rows)}
 function clearAll(){Object.keys(state).forEach(k=>state[k]='');['searchProvince','province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).value='');render()}
 fillSelects();render();updateDataStatus(true,'เชื่อมต่อสำเร็จ');
 $('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;$('exportCsv').onclick=exportRows;$('printReport').onclick=printReport;
