@@ -638,3 +638,157 @@ body:before{
 .appointment-document-actions a { text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
 .appointment-document-actions a:hover { filter:brightness(.97); }
 @media(max-width:700px) { .appointment-document { align-items:flex-start; flex-wrap:wrap; } .appointment-document-info { flex-basis:calc(100% - 74px); } .appointment-document-actions { width:100%; } .appointment-document-actions a { flex:1; } .appointment-documents-panel { padding:14px; } }
+
+
+/* V7.3 Clean Executive Edition – visual hierarchy and reduced clutter */
+.build-badge {
+  letter-spacing: .08em;
+  font-size: 10px;
+  opacity: .78;
+}
+.topbar {
+  gap: 22px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.headline h1 {
+  line-height: 1.42;
+  max-width: 980px;
+}
+.dashboard {
+  gap: 18px;
+}
+.card, .map-panel, .expiry-timeline-panel {
+  border-radius: 18px;
+}
+.section-title {
+  margin-bottom: 14px;
+}
+.section-title h2 {
+  line-height: 1.45;
+}
+.summary-panel {
+  padding: 20px;
+}
+.quick-kpis {
+  gap: 12px;
+}
+.quick-kpis > * {
+  border-radius: 14px;
+}
+.side-filters {
+  gap: 13px;
+}
+.side-filters label {
+  line-height: 1.5;
+}
+.map-stage {
+  min-height: 460px;
+}
+.action-alert-panel {
+  padding: 20px;
+}
+.combined-panels-grid {
+  gap: 22px;
+}
+.expiry-timeline-panel {
+  padding: 20px;
+}
+.dashboard-details {
+  border-radius: 14px;
+}
+.dashboard-details > summary {
+  cursor: pointer;
+  padding: 13px 16px;
+  font-weight: 650;
+  list-style-position: inside;
+}
+.dashboard-details > summary .badge {
+  margin-left: 8px;
+}
+.dashboard-details[open] > summary {
+  border-bottom: 1px solid rgba(90, 110, 95, .16);
+}
+.disclosure-content {
+  padding-top: 16px;
+}
+.more-details {
+  margin-top: 2px;
+}
+.documents-details {
+  margin-top: 2px;
+  background: var(--card, #fff);
+  border: 1px solid rgba(80, 105, 90, .16);
+  box-shadow: 0 8px 24px rgba(35, 60, 45, .045);
+}
+.documents-details .appointment-documents-panel {
+  border: 0;
+  box-shadow: none;
+  padding: 4px 2px 8px;
+  background: transparent;
+}
+.appointment-document {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(90, 110, 95, .14);
+}
+.appointment-document:last-of-type {
+  border-bottom: 0;
+}
+.appointment-document-info strong {
+  display: block;
+  line-height: 1.5;
+}
+.appointment-document-info p {
+  margin: 5px 0 2px;
+}
+.appointment-document-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.appointment-document-note {
+  margin-top: 12px;
+}
+.data-status, .toolbar {
+  margin-top: 14px;
+  border-radius: 14px;
+}
+@media (max-width: 900px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+  .map-stage {
+    min-height: 360px;
+  }
+  .appointment-document {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+  .appointment-document-actions {
+    grid-column: 2;
+  }
+}
+@media (max-width: 560px) {
+  .dashboard {
+    gap: 12px;
+  }
+  .card, .action-alert-panel, .expiry-timeline-panel {
+    padding: 14px;
+    border-radius: 14px;
+  }
+  .appointment-document {
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .appointment-document-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .appointment-document-actions .tool-btn {
+    justify-content: center;
+    text-align: center;
+  }
+}
