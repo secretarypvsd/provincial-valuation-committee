@@ -1,23 +1,22 @@
-# Provincial Valuation Committee Dashboard V5
+# Provincial Valuation Committee Dashboard — V7.0
 
-GitHub Pages dashboard สำหรับข้อมูลกรรมการผู้ทรงคุณวุฒิระดับจังหวัด
+GitHub Pages static dashboard สำหรับตรวจสอบกรรมการผู้ทรงคุณวุฒิประจำจังหวัด
 
-V5:
-- ปรับเลย์เอาต์เป็นแผนที่ใหญ่ด้านซ้าย + สรุป/กราฟด้านขวา
-- เพิ่มพื้นหลังแนวกรมธนารักษ์แบบ local asset
-- แผนที่ 77 จังหวัดทำงานแบบ local ผ่าน map-data.js
-- สีการซ้ำซ้อน 5 ระดับ: ไม่ซ้ำ, ซ้ำ 1, ซ้ำ 2, ซ้ำ 3, มากกว่า 3 สาขา
-- ตัวกรองอยู่ด้านซ้ายของแผนที่
-- รองรับ GitHub Pages แบบ static site
+## V7.0 — Executive Dashboard + Appointment Documents
+- ใช้ V6.9 เป็นฐาน โดยคงการเชื่อม Google Sheets, แผนที่ 77 จังหวัด, ตัวกรอง, KPI, การแจ้งเตือน และ Timeline ครบวาระ 12 เดือน
+- เพิ่มส่วน “เอกสารประกาศแต่งตั้งกรรมการ” สำหรับประกาศฉบับรวม 77 จังหวัด
+- เพิ่มปุ่มเปิดดู PDF ผ่าน Google Drive และปุ่มดาวน์โหลด PDF
+- ปรับ CSS ให้รองรับหน้าจอมือถือ
 
+## การติดตั้งบน GitHub Pages
+1. ดาวน์โหลดและแตกไฟล์ ZIP นี้
+2. อัปโหลดไฟล์และโฟลเดอร์ทั้งหมดใน ZIP ไปยัง root ของ repository (แทนที่ไฟล์เดิม)
+3. Commit และรอ GitHub Pages deploy
 
-## V6.0 Executive Edition
-Premium minimal executive UI. Keeps V5.5 Google Sheets Live data, map/filter logic, duplicate-status semantics, and responsive behavior.
+## Google Drive document
+File ID: `1Kiqxx3OWguogP5o4DYd3189N0TxsJAIp`
 
+ผู้ดู Dashboard ต้องได้รับสิทธิ์เข้าถึงไฟล์ PDF ตามนโยบายของหน่วยงาน หากไฟล์ไม่เปิด ให้ตรวจสอบการตั้งค่า Share ใน Google Drive
 
-## V6.1 Executive Map Palette
-Map semantics: no duplicate #A9B8A5 (sage), duplicate 2 #D6B86A (champagne gold), duplicate 3 #C47C5A (burnished copper), >3 #8F4A55 (burgundy). Selected province uses navy outline without overriding its semantic fill.
-
-
-## V6.2 Bright Refined
-Brighter restrained map palette: soft jade, light champagne, soft apricot, and dusty rose. Functional semantics unchanged.
+## หมายเหตุการทดสอบ
+ไฟล์ชุดนี้จัดทำจาก V6.9 และตรวจสอบโครงสร้าง HTML/CSS และการมีอยู่ของไฟล์หลักใน ZIP แล้ว การเปิดไฟล์ PDF จริงและการทำงานของ Google Sheets ต้องตรวจสอบหลังเผยแพร่บน GitHub Pages ด้วยบัญชีผู้ใช้งานเป้าหมาย
