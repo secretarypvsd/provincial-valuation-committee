@@ -47,3 +47,15 @@ V7.3 Clean Executive Edition: จัดลำดับเนื้อหาห�
 - Added four management insight cards: already expired, due within 90 days, due within 91–180 days, and the province with the largest record count.
 - The mockup's static sample names and figures were not imported. Existing live Google Sheets remains the source of truth.
 - Preserves the V8 filters, 77-province map, duplication legend, charts, alerts, 12-month expiry timeline, data-quality checks, appointment PDFs, CSV export, and print report.
+
+
+## V8 Colors 2027 — Executive Palette Update
+- Retains the V8 Executive Refresh layout and live management insight features.
+- Replaces the navy-and-gold visual theme with the supplied Colors 2027 reference palette: warm ivory, moisture pink, lemon yellow, chocolate brown, red alert, sweet pea, pastel lilac, cool blue, and soft mint.
+- Preserves functional map duplication colors and all existing data, filters, Google Sheets connection, timeline, alerts, reports, and appointment documents.
+
+
+## V8 Executive — palette based on latest dashboard reference
+- Replaced the Colors 2027 palette with the navy, gold, warm ivory, and white visual palette from the latest user-provided dashboard screenshot.
+- Updated the four province-map duplication levels to soft mint, amber, muted blue, and brick red while preserving the original category meanings.
+- Retains executive hero, management insights, Google Sheets source, all existing filters, province map, charts, expiry timeline, alerts, data-quality checks, appointment PDFs, CSV export, and print report.

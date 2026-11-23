@@ -1246,3 +1246,199 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 @media(max-width:720px){
   .topbar{background:linear-gradient(145deg,#49312F,#684640)}
 }
+
+
+/* V8 Colors 2027 palette refresh — retain executive layout, replace navy/gold */
+:root{
+ --trend-ivory:#F5F3EF;
+ --trend-pink:#D987AE;
+ --trend-lemon:#F5DF91;
+ --trend-chocolate:#49312F;
+ --trend-red:#E7111B;
+ --trend-pea:#7F8D22;
+ --trend-lilac:#B7A4D2;
+ --trend-coolblue:#9EB8BB;
+ --trend-mint:#B9D2CC;
+ --trend-cloud:#DCE8E5;
+ --exec-ink:#49312F;
+ --exec-muted:#77716F;
+ --exec-border:#E7E1DC;
+}
+body{background:var(--trend-ivory);color:#49312F}
+body:before{
+ background:
+  radial-gradient(ellipse at 8% 5%,rgba(217,135,174,.16),transparent 28%),
+  radial-gradient(ellipse at 90% 8%,rgba(245,223,145,.20),transparent 30%),
+  radial-gradient(ellipse at 76% 88%,rgba(158,184,187,.16),transparent 32%),
+  linear-gradient(135deg,#F7F5F1 0%,#F2F0EC 54%,#F7F4F0 100%);
+}
+.topbar{
+ background:
+  radial-gradient(circle at 80% 5%,rgba(217,135,174,.20),transparent 26%),
+  linear-gradient(112deg,#49312F 0%,#5A3C38 58%,#684640 100%);
+ border-bottom:4px solid #F5DF91;
+ box-shadow:0 8px 24px rgba(73,49,47,.14);
+}
+.headline .eyebrow{color:#F5DF91}
+.headline p,.brand small{color:#F0E5DF}
+.top-actions b{background:#F5DF91;color:#49312F}
+.build-badge{background:#49312F;color:#F5DF91;border:1px solid #D9B6A0}
+.executive-hero{
+ background:
+  radial-gradient(circle at 78% 0%,rgba(217,135,174,.22),transparent 30%),
+  linear-gradient(112deg,#49312F 0%,#5A3C38 70%,#76514A 100%);
+ box-shadow:0 14px 34px rgba(73,49,47,.15);
+}
+.executive-eyebrow{color:#F5DF91}
+.executive-copy h2,.executive-cohort p{color:#FFFAF5}
+.executive-copy p{color:#F0E5DF}
+.executive-actions a{background:#F5DF91;color:#49312F}
+.executive-actions a+a{background:transparent;border-color:#D9B6A0;color:#FFFAF5}
+.executive-cohort{background:#5A3C38;border-color:#91665D}
+.cohort-label,.cohort-number strong{color:#F5DF91}
+.cohort-progress{background:#805B52}
+.cohort-progress span{background:#F5DF91}
+.cohort-number span{color:#FFFAF5}
+.cohort-caption,.executive-cohort small{color:#F0E5DF}
+.executive-section-heading h2{color:#49312F}
+.executive-insight{border-color:#E7E1DC;box-shadow:0 5px 16px rgba(73,49,47,.055)}
+.insight-value{color:#49312F}
+.executive-insight h3{color:#49312F}
+.executive-insight p,.insight-caption{color:#77716F}
+.executive-insight.urgent{border-top-color:#E7111B}
+.executive-insight.urgent .insight-tag{background:#FBE3DF;color:#8A1F11}
+.executive-insight.soon{border-top-color:#D987AE}
+.executive-insight.soon .insight-tag{background:#F6E5ED;color:#81536A}
+.executive-insight.watch{border-top-color:#F5DF91}
+.executive-insight.watch .insight-tag{background:#FFF4CF;color:#765B13}
+.executive-insight.info{border-top-color:#9EB8BB}
+.executive-insight.info .insight-tag{background:#E5EFF0;color:#537E83}
+.map-panel,.card{border-color:#E7E1DC;box-shadow:0 7px 22px rgba(73,49,47,.055)}
+.side-filters{background:linear-gradient(180deg,#FBF8F5 0%,#F4EFEC 100%);border-right-color:#E8DFD9}
+.side-filters label{color:#554440;border-color:#E9DFDA}
+.side-filters input,.side-filters select{border-color:#DED2CB}
+.reset-btn,.tool-btn{background:#49312F;color:#FFFAF5}
+.tool-btn.secondary{background:#F6EAF0;color:#694654;border:1px solid #E8CEDA}
+.section-title h2{color:#49312F}
+.section-title>span:first-child{background:#F8EAF0;color:#8C5570}
+.quick-kpi{border-color:#E9E0DB}
+.quick-kpi.total{background:linear-gradient(135deg,#F6E5ED,#FCF7F8)}
+.quick-kpi.total .icon{color:#A9577C}
+.quick-kpi.provinces{background:linear-gradient(135deg,#E5EFF0,#F7FAF9)}
+.quick-kpi.provinces .icon{color:#537E83}
+.quick-kpi.expiring{background:linear-gradient(135deg,#FBF0C9,#FFFCF1)}
+.quick-kpi.expiring .icon{color:#927329}
+.quick-kpi.expertise{background:linear-gradient(135deg,#EEE8F6,#FBF9FD)}
+.quick-kpi.expertise .icon{color:#78619B}
+.quick-kpi strong{color:#49312F}
+th{background:#49312F;color:#FFFAF5}
+.bar-fill{background:linear-gradient(90deg,#D987AE,#B7A4D2,#9EB8BB)}
+.dashboard-details,.documents-details{border-color:#E8DFD9;background:#FFFEFC}
+.dashboard-details>summary{color:#694B45}
+.data-status,.toolbar{border-color:#E8DFD9;background:rgba(255,255,255,.94)}
+.data-status strong,.toolbar strong{color:#49312F}
+a{color:#80506A}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(183,164,210,.65);outline-offset:2px}
+
+
+/* V8 Executive palette — based on the latest user-provided dashboard reference.
+   This replaces the Colors 2027 palette completely. */
+:root{
+ --ref-navy:#0B2A4A;
+ --ref-blue:#0F3559;
+ --ref-gold:#D6AA28;
+ --ref-gold-light:#F0CE61;
+ --ref-ivory:#F4F1E8;
+ --ref-paper:#FFFFFF;
+ --ref-mint:#DDF0E7;
+ --ref-green:#176247;
+ --ref-amber:#F4B942;
+ --ref-mapblue:#87A7DB;
+ --ref-red:#B53A2D;
+ --ref-ink:#18334D;
+ --ref-muted:#718096;
+ --ref-border:#E7E2D7;
+}
+body{background:var(--ref-ivory);color:var(--ref-ink)}
+body:before{
+ background:
+  radial-gradient(ellipse at 8% 5%,rgba(214,170,40,.08),transparent 28%),
+  radial-gradient(ellipse at 90% 8%,rgba(15,53,89,.06),transparent 30%),
+  linear-gradient(135deg,#F7F5EF 0%,#F4F1E8 100%);
+}
+.topbar{
+ background:var(--ref-navy);
+ border-bottom:1px solid #1E456B;
+ box-shadow:0 8px 24px rgba(11,42,74,.16);
+}
+.headline .eyebrow{color:var(--ref-gold-light)}
+.headline p,.brand small{color:#D8E2EC}
+.top-actions b{background:var(--ref-gold);color:var(--ref-navy)}
+.build-badge{background:var(--ref-navy);color:#FFF7DF;border:1px solid var(--ref-gold)}
+.executive-hero{
+ background:
+  radial-gradient(circle at 82% 0%,rgba(214,170,40,.14),transparent 28%),
+  linear-gradient(112deg,#0B2A4A 0%,#0F3559 72%,#16466C 100%);
+ box-shadow:0 14px 34px rgba(11,42,74,.15);
+}
+.executive-eyebrow{color:var(--ref-gold-light)}
+.executive-copy h2,.executive-cohort p{color:#FFFFFF}
+.executive-copy p{color:#D8E2EC}
+.executive-actions a{background:var(--ref-gold);color:var(--ref-navy)}
+.executive-actions a+a{background:transparent;border-color:#6684A3;color:#FFFFFF}
+.executive-cohort{background:#0F3559;border-color:#315B82}
+.cohort-label,.cohort-number strong{color:var(--ref-gold-light)}
+.cohort-number span{color:#FFFFFF}
+.cohort-progress{background:#244A70}
+.cohort-progress span{background:var(--ref-gold)}
+.executive-cohort small{color:#C8D6E4}
+.executive-section-heading h2{color:var(--ref-navy)}
+.executive-insight{
+ background:#FFFFFF;border-color:var(--ref-border);
+ box-shadow:0 5px 16px rgba(11,42,74,.05);
+}
+.insight-value{color:var(--ref-navy)}
+.executive-insight h3{color:var(--ref-ink)}
+.executive-insight p,.insight-caption{color:var(--ref-muted)}
+.executive-insight.urgent{border-top-color:var(--ref-red)}
+.executive-insight.urgent .insight-tag{background:#F8E5E1;color:#8F2D23}
+.executive-insight.soon{border-top-color:var(--ref-amber)}
+.executive-insight.soon .insight-tag{background:#FFF1D2;color:#79520A}
+.executive-insight.watch{border-top-color:var(--ref-gold)}
+.executive-insight.watch .insight-tag{background:#FFF5D7;color:#725700}
+.executive-insight.info{border-top-color:var(--ref-mapblue)}
+.executive-insight.info .insight-tag{background:#E7EEF9;color:#31547D}
+.map-panel,.card{
+ background:#FFFFFF;border-color:var(--ref-border);
+ box-shadow:0 7px 22px rgba(11,42,74,.05);
+}
+.side-filters{
+ background:#F8F6F0;border-right-color:#E5DFD1;
+}
+.side-filters label{color:#344A60;border-color:#E3DDCF;background:#FFFFFF}
+.side-filters input,.side-filters select{border-color:#D6D1C5}
+.reset-btn,.tool-btn{background:var(--ref-navy);color:#FFFFFF}
+.tool-btn.secondary{background:#F5F1E6;color:var(--ref-navy);border:1px solid #DDD4BD}
+.section-title h2{color:var(--ref-navy)}
+.section-title>span:first-child{background:#F8F0D8;color:#8A6A12}
+.quick-kpi{border-color:var(--ref-border);background:#FFFFFF}
+.quick-kpi.total{background:linear-gradient(135deg,#EAF0F7,#FFFFFF)}
+.quick-kpi.provinces{background:linear-gradient(135deg,#E3F1E9,#FFFFFF)}
+.quick-kpi.expiring{background:linear-gradient(135deg,#FFF2D6,#FFFFFF)}
+.quick-kpi.expertise{background:linear-gradient(135deg,#EEF1F7,#FFFFFF)}
+.quick-kpi strong{color:var(--ref-navy)}
+.quick-kpi.total .icon{color:var(--ref-blue)}
+.quick-kpi.provinces .icon{color:var(--ref-green)}
+.quick-kpi.expiring .icon{color:#A36C0A}
+.quick-kpi.expertise .icon{color:#536F9D}
+th{background:var(--ref-navy);color:#FFFFFF}
+.bar-fill{background:linear-gradient(90deg,#0F3559,#4D79A8,var(--ref-gold))}
+.dashboard-details,.documents-details{border-color:var(--ref-border);background:#FFFFFF}
+.dashboard-details>summary{color:var(--ref-navy)}
+.data-status,.toolbar{border-color:var(--ref-border);background:#FFFFFF}
+.data-status strong,.toolbar strong{color:var(--ref-navy)}
+.map-legend span i{border:1px solid rgba(11,42,74,.12)}
+a{color:#244F79}
+@media(max-width:720px){
+ .topbar{background:var(--ref-navy)}
+}
