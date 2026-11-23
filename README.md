@@ -23,3 +23,19 @@ File ID: `1Kiqxx3OWguogP5o4DYd3189N0TxsJAIp`
 
 
 V7.3 Clean Executive Edition: จัดลำดับเนื้อหาหน้าหลักให้โปร่งขึ้น และย้ายรายการประกาศแต่งตั้ง 5 ฉบับไว้ในส่วนพับ/ขยาย โดยคงลิงก์เปิดดูและดาวน์โหลด PDF แยกแต่ละฉบับ
+
+
+## V8.0 — Premium Analytics Executive Edition
+- Premium executive visual theme: deep forest green, warm ivory, and muted gold.
+- Executive-first hierarchy with refined header, map panel, alert area, and expiry timeline.
+- KPI strip now shows total committee members, provinces represented, current-year expiries, and expertise categories.
+- KPI values follow the existing active filters.
+- Preserves Google Sheets CSV source, province map, all existing filters, expiry timeline, alerts, quality checks, tables, appointment documents, CSV export, and print report controls.
+- Built from V7.3; no backend or source-sheet schema changes.
+
+
+## V8.1 — Colors 2027 Trend Edition
+- Recolored the V8.0 executive dashboard using the supplied CEA Colors 2027 reference.
+- Palette direction: warm ivory, moisture pink, lemon yellow, chocolate brown, vivid red, sweet pea green, pastel lilac, cool blue, and soft mint.
+- Preserves the executive-first layout, Google Sheets integration, filters, map interactions, expiry timeline, alerts, appointment documents, and export/print controls.
+- Map duplication/status colors remain unchanged so their existing meaning is not disrupted.

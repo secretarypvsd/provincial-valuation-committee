@@ -26,10 +26,15 @@ function renderMap(){
 }
 function renderQuickKpis(rows=DATA){
   const currentYear=new Date().getFullYear();
-  const expiringThisYear=rows.filter(r=>new Date(r.expires+'T00:00:00').getFullYear()===currentYear).length;
+  const expiringThisYear=rows.filter(r=>r.expires && new Date(r.expires+'T00:00:00').getFullYear()===currentYear).length;
+  const provinces=new Set(rows.map(r=>r.province).filter(Boolean)).size;
+  const expertiseCount=new Set(rows.map(r=>normExp(r.expertise)).filter(Boolean)).size;
+  const expired=rows.filter(r=>statusOf(r)==='หมดวาระแล้ว').length;
   $('quickKpis').innerHTML=`
-    <div class="quick-kpi total"><div class="icon">👥</div><div><strong>${rows.length.toLocaleString()}</strong><span>จำนวนกรรมการผู้ทรงคุณวุฒิฯ</span></div></div>
-    <div class="quick-kpi expiring"><div class="icon">⏳</div><div><strong>${expiringThisYear.toLocaleString()}</strong><span>ครบวาระในปี พ.ศ. ${currentYear+543}</span></div></div>`;
+    <div class="quick-kpi total"><div class="icon">👥</div><div><strong>${rows.length.toLocaleString()}</strong><span>กรรมการผู้ทรงคุณวุฒิฯ</span></div></div>
+    <div class="quick-kpi provinces"><div class="icon">⌖</div><div><strong>${provinces.toLocaleString()}</strong><span>จังหวัดที่มีข้อมูล</span></div></div>
+    <div class="quick-kpi expiring"><div class="icon">⏳</div><div><strong>${expiringThisYear.toLocaleString()}</strong><span>ครบวาระในปี พ.ศ. ${currentYear+543}</span></div></div>
+    <div class="quick-kpi expertise"><div class="icon">✦</div><div><strong>${expertiseCount.toLocaleString()}</strong><span>สาขาความเชี่ยวชาญ</span></div></div>`;
 }
 function showSuggestions(q){
   const box=$('provinceSuggestions');
