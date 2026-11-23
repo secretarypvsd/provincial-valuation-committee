@@ -173,7 +173,54 @@ function exportRows(){
 }
 function printReport(){window.print()}
 
-function render(){let rows=filtered();renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows);renderActionKpis(rows);renderExpiryAlerts(rows);renderCoverage(rows);validateData(rows);renderExpiryTimeline(rows)}
+
+function renderExecutive(rows=DATA){
+  const now=new Date();now.setHours(0,0,0,0);
+  const dates={};
+  DATA.filter(r=>r.expires).forEach(r=>{
+    const d=new Date(r.expires+'T00:00:00');
+    if(!Number.isFinite(d.getTime()))return;
+    const key=r.expires;
+    dates[key]=(dates[key]||0)+1;
+  });
+  const cohorts=Object.entries(dates).map(([date,count])=>({date,count,d:new Date(date+'T00:00:00')}))
+    .filter(x=>x.d>=now && x.d<=new Date(now.getFullYear(),now.getMonth()+12,now.getDate()))
+    .sort((a,b)=>b.count-a.count || a.d-b.d);
+  const nearest=cohorts[0] || Object.entries(dates).map(([date,count])=>({date,count,d:new Date(date+'T00:00:00')}))
+    .filter(x=>x.d>=now).sort((a,b)=>a.d-b.d)[0];
+  const days=nearest?Math.ceil((nearest.d-now)/86400000):null;
+  $('cohortDays').textContent=days===null?'—':days.toLocaleString('th-TH');
+  $('cohortDetail').textContent=nearest
+    ? `มีกรรมการ ${nearest.count.toLocaleString('th-TH')} ราย ครบวาระวันที่ ${fmt(nearest.date)}`
+    : 'ยังไม่พบกำหนดครบวาระในอนาคตจากข้อมูลที่มี';
+  $('cohortRange').textContent=nearest?'วันที่ครบวาระที่มีจำนวนรายการสูงสุดใน 12 เดือนข้างหน้า':'โปรดตรวจสอบข้อมูลวันครบวาระใน Google Sheets';
+  const cohortRows=nearest?DATA.filter(r=>r.expires===nearest.date&&r.appointed):[];
+  const starts=cohortRows.map(r=>new Date(r.appointed+'T00:00:00')).filter(d=>Number.isFinite(d.getTime()));
+  const start=starts.length?new Date(Math.min(...starts.map(d=>d.getTime()))):null;
+  const span=start&&nearest?(nearest.d-start)/86400000:0;
+  const elapsed=start?((now-start)/86400000):0;
+  const pct=span>0?Math.max(0,Math.min(100,Math.round((elapsed/span)*100))):0;
+  $('cohortProgress').style.width=pct+'%';
+
+  const expired=DATA.filter(r=>statusOf(r)==='หมดวาระแล้ว');
+  const due90=DATA.filter(r=>{const d=daysLeft(r);return d>=0&&d<=90});
+  const due180=DATA.filter(r=>{const d=daysLeft(r);return d>90&&d<=180});
+  const provCounts={};DATA.forEach(r=>provCounts[r.province]=(provCounts[r.province]||0)+1);
+  const topProvince=Object.entries(provCounts).sort((a,b)=>b[1]-a[1])[0];
+  const expertCounts={};DATA.forEach(r=>{const e=normExp(r.expertise||'ไม่ระบุสาขา');expertCounts[e]=(expertCounts[e]||0)+1});
+  const topExpert=Object.entries(expertCounts).sort((a,b)=>b[1]-a[1])[0];
+  const insights=[
+    {tone:'urgent',tag:'ต้องพิจารณา',value:expired.length,title:'กรรมการครบวาระแล้ว',body:expired.length?`ควรตรวจสอบสถานะและพิจารณาการต่อวาระหรือสรรหาใหม่ จำนวน ${expired.length.toLocaleString('th-TH')} ราย`:'ไม่พบกรรมการที่ครบวาระแล้ว'},
+    {tone:'soon',tag:'ติดตามล่วงหน้า',value:due90.length,title:'ครบวาระภายใน 90 วัน',body:due90.length?`ควรวางแผนดำเนินการล่วงหน้า รวมถึงตรวจสอบความพร้อมของรายชื่อทดแทน`:'ไม่มีรายการครบวาระในช่วง 90 วันข้างหน้า'},
+    {tone:'watch',tag:'เตรียมการ',value:due180.length,title:'ครบวาระใน 91–180 วัน',body:due180.length?`เตรียมข้อมูลประกอบการพิจารณาและประสานจังหวัดที่เกี่ยวข้อง`:'ไม่มีรายการครบวาระในช่วง 91–180 วัน'},
+    {tone:'info',tag:'ข้อมูลภาพรวม',value:topProvince?topProvince[1]:0,title:topProvince?'จังหวัดที่มีรายชื่อมากที่สุด':'ข้อมูลจังหวัด',body:topProvince?`${topProvince[0]} · สาขาที่พบมากที่สุดคือ ${topExpert?topExpert[0]:'ไม่ระบุ'}`:'ยังไม่มีข้อมูลให้ประมวลผล'}
+  ];
+  $('executiveInsights').innerHTML=insights.map(x=>`<article class="executive-insight ${x.tone}">
+    <span class="insight-tag">${x.tag}</span><div class="insight-value">${x.value.toLocaleString('th-TH')}</div>
+    <h3>${x.title}</h3><p>${x.body}</p></article>`).join('');
+}
+
+function render(){let rows=filtered();renderExecutive(rows);renderMap();renderQuickKpis(rows);renderDup(rows);renderYears(rows);renderExpert(rows);renderTable(rows);renderActionKpis(rows);renderExpiryAlerts(rows);renderCoverage(rows);validateData(rows);renderExpiryTimeline(rows)}
 function clearAll(){Object.keys(state).forEach(k=>state[k]='');['searchProvince','province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).value='');render()}
 fillSelects();render();updateDataStatus(true,'เชื่อมต่อสำเร็จ');
 $('searchProvince').oninput=e=>{state.search=e.target.value.trim();state.province='';$('province').value='';showSuggestions(state.search);render()};$('searchProvince').onfocus=e=>showSuggestions(e.target.value);document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))$('provinceSuggestions').hidden=true});['province','expertise','appointedYear','status','duplicate'].forEach(id=>$(id).onchange=e=>{state[id]=e.target.value;render()});$('clear').onclick=clearAll;$('exportCsv').onclick=exportRows;$('printReport').onclick=printReport;

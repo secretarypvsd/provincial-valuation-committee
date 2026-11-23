@@ -39,3 +39,11 @@ V7.3 Clean Executive Edition: จัดลำดับเนื้อหาห�
 - Palette direction: warm ivory, moisture pink, lemon yellow, chocolate brown, vivid red, sweet pea green, pastel lilac, cool blue, and soft mint.
 - Preserves the executive-first layout, Google Sheets integration, filters, map interactions, expiry timeline, alerts, appointment documents, and export/print controls.
 - Map duplication/status colors remain unchanged so their existing meaning is not disrupted.
+
+
+## V8 Executive Refresh — management mockup integration
+- Adapted the supplied executive mockup's visual language: navy, muted gold, warm ivory, and clear management hierarchy.
+- Added a live executive hero with a dynamically calculated upcoming expiry cohort from the connected Google Sheets data.
+- Added four management insight cards: already expired, due within 90 days, due within 91–180 days, and the province with the largest record count.
+- The mockup's static sample names and figures were not imported. Existing live Google Sheets remains the source of truth.
+- Preserves the V8 filters, 77-province map, duplication legend, charts, alerts, 12-month expiry timeline, data-quality checks, appointment PDFs, CSV export, and print report.

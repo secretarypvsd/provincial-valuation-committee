@@ -1038,3 +1038,211 @@ button:focus-visible,input:focus-visible,select:focus-visible{
 @media(max-width:720px){
   .topbar{background:linear-gradient(145deg,#49312F,#684640)}
 }
+
+
+/* V8 Executive Refresh — visual system adapted from the supplied management mockup */
+:root{
+ --exec-navy:#0B2A4A;--exec-blue:#0F3559;--exec-gold:#C9A227;
+ --exec-gold-light:#E3C25A;--exec-ivory:#F4F1E8;--exec-ink:#14233A;
+ --exec-muted:#5B6B84;--exec-border:#DAD3BF;
+}
+body{background:var(--exec-ivory);color:var(--exec-ink)}
+body:before{
+ background:
+  radial-gradient(ellipse at 8% 5%,rgba(201,162,39,.10),transparent 28%),
+  radial-gradient(ellipse at 90% 8%,rgba(15,53,89,.07),transparent 30%),
+  linear-gradient(135deg,#F7F5EF 0%,#F1EFE7 100%);
+}
+.topbar{
+ background:var(--exec-navy);border-bottom:1px solid #1F456F;
+ box-shadow:0 8px 24px rgba(11,42,74,.16);
+}
+.headline .eyebrow{color:var(--exec-gold-light)}
+.headline p,.brand small{color:#D9E2EE}
+.top-actions b{background:var(--exec-gold);color:var(--exec-navy)}
+.build-badge{background:var(--exec-navy);color:#FAF6EA;border:1px solid var(--exec-gold)}
+.executive-hero{
+ max-width:1692px;margin:20px auto 16px;padding:30px 32px;
+ display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.75fr);
+ gap:24px;align-items:stretch;border-radius:22px;overflow:hidden;
+ color:#FAF6EA;background:
+  radial-gradient(circle at 78% 0%,rgba(201,162,39,.16),transparent 30%),
+  linear-gradient(112deg,#0B2A4A 0%,#0F3559 70%,#17466C 100%);
+ box-shadow:0 14px 34px rgba(11,42,74,.16);
+}
+.executive-copy{display:flex;flex-direction:column;justify-content:center;gap:12px}
+.executive-eyebrow{font-size:11px;font-weight:800;letter-spacing:1.6px;color:var(--exec-gold-light)}
+.executive-copy h2{font-size:clamp(23px,2.2vw,34px);line-height:1.35;margin:0;color:#FAF6EA}
+.executive-copy p{font-size:15px;line-height:1.7;color:#D9E2EE;margin:0;max-width:690px}
+.executive-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:7px}
+.executive-actions a{padding:10px 16px;border-radius:9px;text-decoration:none;font-size:13px;font-weight:800;background:var(--exec-gold);color:var(--exec-navy)}
+.executive-actions a+ a{background:transparent;border:1px solid #6F8FB8;color:#FAF6EA}
+.executive-cohort{padding:22px 24px;border-radius:16px;background:#0F3559;border:1px solid #2B5584;display:flex;flex-direction:column;justify-content:center;gap:7px}
+.cohort-label{font-size:13px;font-weight:700;color:var(--exec-gold-light);line-height:1.5}
+.cohort-number{display:flex;align-items:baseline;gap:9px}
+.cohort-number strong{font-size:clamp(54px,6vw,82px);line-height:1;color:var(--exec-gold-light);font-variant-numeric:tabular-nums}
+.cohort-number span{font-size:20px;font-weight:700}
+.executive-cohort p{font-size:15px;line-height:1.6;margin:0;color:#FAF6EA}
+.cohort-progress{height:9px;border-radius:20px;background:#1F456F;overflow:hidden;margin-top:8px}
+.cohort-progress span{display:block;height:100%;width:0;background:var(--exec-gold-light);border-radius:20px;transition:width .35s ease}
+.executive-cohort small{font-size:11px;color:#BFD0E4;line-height:1.5}
+.executive-insights{max-width:1692px;margin:0 auto 18px;padding:0 2px}
+.executive-section-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:12px}
+.executive-section-heading h2{margin:3px 0 0;font-size:20px;color:var(--exec-navy)}
+.insight-caption{font-size:12px;color:var(--exec-muted)}
+.executive-insight-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.executive-insight{background:#fff;border:1px solid var(--exec-border);border-radius:15px;padding:16px 17px;box-shadow:0 5px 16px rgba(11,42,74,.055);min-width:0}
+.insight-tag{display:inline-block;border-radius:999px;padding:3px 9px;font-size:11px;font-weight:800;background:#E8EDF3;color:#244461}
+.insight-value{font-size:34px;font-weight:800;line-height:1.15;margin-top:10px;color:var(--exec-navy);font-variant-numeric:tabular-nums}
+.executive-insight h3{font-size:14px;margin:4px 0 5px;color:var(--exec-ink)}
+.executive-insight p{font-size:12px;line-height:1.55;margin:0;color:var(--exec-muted)}
+.executive-insight.urgent{border-top:4px solid #A8322A}
+.executive-insight.urgent .insight-tag{background:#FBE3DF;color:#8A1F11}
+.executive-insight.soon{border-top:4px solid #C77D24}
+.executive-insight.soon .insight-tag{background:#FDE8CE;color:#75400B}
+.executive-insight.watch{border-top:4px solid var(--exec-gold)}
+.executive-insight.watch .insight-tag{background:#FFF1C7;color:#6B5200}
+.executive-insight.info{border-top:4px solid #39799B}
+.executive-insight.info .insight-tag{background:#DDE9F7;color:#17436F}
+.dashboard{max-width:1740px}
+.map-panel,.card{border-color:var(--exec-border);box-shadow:0 7px 22px rgba(11,42,74,.055)}
+.side-filters{background:#F8F6EF;border-right-color:#E5DFCC}
+.side-filters label{color:#34445A;border-color:#E1DAC8}
+.side-filters input,.side-filters select{border-color:#C9C1AC}
+.reset-btn,.tool-btn{background:var(--exec-navy);color:#FAF6EA}
+.tool-btn.secondary{background:#F7F2E2;color:var(--exec-navy);border:1px solid #D8C88E}
+.section-title h2{color:var(--exec-navy)}
+.section-title>span:first-child{background:#F5EBCB;color:#7A5B00}
+.quick-kpi{border-color:#E5DFCC}
+.quick-kpi.total{background:linear-gradient(135deg,#E7EDF4,#F9FBFD)}
+.quick-kpi.provinces{background:linear-gradient(135deg,#E6F0EA,#F8FBF8)}
+.quick-kpi.expiring{background:linear-gradient(135deg,#FFF1D2,#FFFCF4)}
+.quick-kpi.expertise{background:linear-gradient(135deg,#EEEAF5,#FBFAFD)}
+.quick-kpi strong{color:var(--exec-navy)}
+th{background:var(--exec-navy);color:#FAF6EA}
+.bar-fill{background:linear-gradient(90deg,#2B5584,#7F9BDB,var(--exec-gold))}
+.dashboard-details,.documents-details{border-color:var(--exec-border);background:#FFFEFA}
+.dashboard-details>summary{color:var(--exec-navy)}
+.data-status,.toolbar{border-color:var(--exec-border);background:#fff}
+.data-status strong,.toolbar strong{color:var(--exec-navy)}
+@media(max-width:1100px){.executive-insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){
+ .executive-hero{margin:14px 14px 12px;padding:23px;grid-template-columns:1fr}
+ .executive-insights{margin:0 14px 14px}
+}
+@media(max-width:560px){
+ .executive-hero{padding:19px;border-radius:16px}
+ .executive-cohort{padding:17px}
+ .executive-section-heading{align-items:flex-start;flex-direction:column}
+ .executive-insight-grid{grid-template-columns:1fr 1fr;gap:8px}
+ .executive-insight{padding:12px}
+ .insight-value{font-size:27px}
+ .executive-insight p{font-size:11px}
+}
+
+
+/* =========================================================
+   V8.1 COLORS 2027 — CEA trend-inspired editorial palette
+   Ivory paper + Moisture Pink + Lemon Meringue + Chocolate
+   + Red Alert + Sweet Pea + Pastel Lilac + Cool Blue.
+   Functional map status colors are intentionally preserved.
+   ========================================================= */
+:root{
+  --trend-ivory:#F5F3EF;
+  --trend-pink:#D987AE;
+  --trend-lemon:#F5DF91;
+  --trend-chocolate:#49312F;
+  --trend-red:#E7111B;
+  --trend-pea:#7F8D22;
+  --trend-lilac:#B7A4D2;
+  --trend-coolblue:#9EB8BB;
+  --trend-mint:#B9D2CC;
+  --trend-cloud:#DCE8E5;
+  --ink:#342D2C;
+  --muted:#77716F;
+  --line:#E7E1DC;
+  --shadow:0 10px 28px rgba(73,49,47,.075);
+}
+body{background:var(--trend-ivory);color:var(--ink)}
+body:before{
+  background:
+    radial-gradient(ellipse at 9% 6%,rgba(217,135,174,.16),transparent 28%),
+    radial-gradient(ellipse at 92% 12%,rgba(245,223,145,.22),transparent 27%),
+    radial-gradient(ellipse at 75% 85%,rgba(158,184,187,.14),transparent 32%),
+    linear-gradient(135deg,#F7F5F1 0%,#F2F0EC 54%,#F7F4F0 100%);
+}
+.topbar{
+  background:
+    radial-gradient(circle at 82% 5%,rgba(217,135,174,.24),transparent 24%),
+    linear-gradient(112deg,#49312F 0%,#5A3C38 58%,#684640 100%);
+  border-bottom:4px solid var(--trend-lemon);
+  box-shadow:0 8px 24px rgba(73,49,47,.16);
+}
+.headline .eyebrow{color:var(--trend-lemon)}
+.headline p{color:#F0E5DF}
+.brand small{color:#EADDD7}
+.top-actions b{background:var(--trend-lemon);color:var(--trend-chocolate)}
+.build-badge{background:#62423D;color:#F7E8C2;border:1px solid #D9B6A0}
+.map-panel,.card{
+  background:rgba(255,255,255,.94);
+  border:1px solid #E8E0DA;
+  box-shadow:0 10px 28px rgba(73,49,47,.07);
+}
+.side-filters{
+  background:linear-gradient(180deg,#FBF8F5 0%,#F4EFEC 100%);
+  border-right:1px solid #E8DFD9;
+}
+.side-filters label{
+  border-color:#E9DFDA;color:#554440;
+}
+.side-filters input,.side-filters select{border-color:#DED2CB}
+.reset-btn,.tool-btn{
+  background:linear-gradient(100deg,#49312F,#79524A);
+  color:#fff;
+}
+.tool-btn.secondary{
+  background:#F6EAF0;color:#694654;border:1px solid #E8CEDA;
+}
+.section-title h2{color:var(--trend-chocolate)}
+.section-title>span:first-child{
+  background:#F8EAF0;color:#8C5570;
+}
+.quick-kpi{border:1px solid #E9E0DB;box-shadow:0 3px 10px rgba(73,49,47,.035)}
+.quick-kpi.total{background:linear-gradient(135deg,#F6E5ED,#FCF7F8)}
+.quick-kpi.total .icon{color:#A9577C}
+.quick-kpi.provinces{background:linear-gradient(135deg,#E5EFF0,#F7FAF9)}
+.quick-kpi.provinces .icon{color:#537E83}
+.quick-kpi.expiring{background:linear-gradient(135deg,#FBF0C9,#FFFCF1)}
+.quick-kpi.expiring .icon{color:#927329}
+.quick-kpi.expertise{background:linear-gradient(135deg,#EEE8F6,#FBF9FD)}
+.quick-kpi.expertise .icon{color:#78619B}
+.quick-kpi strong{color:var(--trend-chocolate)}
+.quick-kpi span{color:#786D69}
+.dashboard-details,.documents-details{
+  background:#FFFEFC;border-color:#E8DFD9;
+}
+.dashboard-details>summary{color:#694B45}
+.dashboard-details[open]>summary{border-bottom-color:#E8DFD9}
+.data-status,.toolbar{
+  border-color:#E8DFD9;background:rgba(255,255,255,.92);
+  box-shadow:0 5px 18px rgba(73,49,47,.045);
+}
+.data-status strong,.toolbar strong{color:var(--trend-chocolate)}
+th{background:#F4E9E8;color:#624742}
+td{border-bottom-color:#F0EAE6}
+.bar-fill{background:linear-gradient(90deg,var(--trend-pink),var(--trend-lilac),var(--trend-coolblue))}
+.badge{background:#F7EAF0;color:#81536A}
+.expiry-timeline-panel,.action-alert-panel{
+  background:linear-gradient(145deg,#FFFEFC 0%,#F9F5F1 100%);
+}
+.map-legend,.map-selected{
+  border-color:#E8DFD9;box-shadow:0 5px 18px rgba(73,49,47,.07);
+}
+/* Accent colors for visual hierarchy; retain semantic status colors on the map. */
+a{color:#80506A}
+button:focus-visible,input:focus-visible,select:focus-visible{
+  outline:3px solid rgba(183,164,210,.65);outline-offset:2px;
+}
+@media(max-width:720px){
+  .topbar{background:linear-gradient(145deg,#49312F,#684640)}
+}

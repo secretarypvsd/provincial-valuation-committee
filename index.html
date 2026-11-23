@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ระบบตรวจสอบกรรมการผู้ทรงคุณวุฒิในคณะกรรมการประเมินราคาทรัพย์สินเพื่อประโยชน์แห่งรัฐประจำจังหวัด</title>
-<link rel="stylesheet" href="styles.css?v=8.1-20261123">
+<link rel="stylesheet" href="styles.css?v=8-executive-20261123">
 </head>
-<body><div class="build-badge">V8.1 COLORS 2027 EDITION</div>
+<body><div class="build-badge">V8 EXECUTIVE REFRESH</div>
 <header class="topbar">
   <div class="brand">
     <img class="treasury-logo" src="treasury-logo.png" alt="ตราสัญลักษณ์กรมธนารักษ์">
@@ -21,6 +21,33 @@
 </header>
 
 
+
+
+<section class="executive-hero" aria-label="ภาพรวมสำหรับผู้บริหาร">
+  <div class="executive-copy">
+    <div class="executive-eyebrow">PROVINCIAL VALUATION COMMITTEE · MANAGEMENT OVERVIEW</div>
+    <h2>ภาพรวมสถานการณ์กรรมการผู้ทรงคุณวุฒิ</h2>
+    <p>ติดตามสถานะกรรมการรายจังหวัด ประเด็นที่ต้องดำเนินการ และกำหนดครบวาระสำคัญจากฐานข้อมูลล่าสุด</p>
+    <div class="executive-actions">
+      <a href="#provinceMap">ดูแผนที่รายจังหวัด</a>
+      <a href="#mainTable">ดูรายชื่อกรรมการ</a>
+    </div>
+  </div>
+  <div class="executive-cohort" id="executiveCohort" aria-live="polite">
+    <span class="cohort-label">กำหนดครบวาระที่มีจำนวนกรรมการสูงสุดในช่วง 12 เดือน</span>
+    <div class="cohort-number"><strong id="cohortDays">—</strong><span>วัน</span></div>
+    <p id="cohortDetail">กำลังประมวลผลข้อมูลวันครบวาระ…</p>
+    <div class="cohort-progress"><span id="cohortProgress"></span></div>
+    <small id="cohortRange"></small>
+  </div>
+</section>
+<section class="executive-insights" aria-labelledby="executiveInsightsTitle">
+  <div class="executive-section-heading">
+    <div><span class="executive-eyebrow">MANAGEMENT INSIGHTS</span><h2 id="executiveInsightsTitle">ประเด็นสำคัญที่ควรติดตาม</h2></div>
+    <span class="insight-caption">สรุปอัตโนมัติจากข้อมูล Google Sheets</span>
+  </div>
+  <div id="executiveInsights" class="executive-insight-grid"></div>
+</section>
 
 <main class="dashboard">
 <section class="map-panel">
@@ -177,8 +204,8 @@
 </details>
 
 </main>
-<script src="map-data.js?v=8.1-20261123"></script>
-<script src="app.js?v=8.1-20261123"></script>
+<script src="map-data.js?v=8-executive-20261123"></script>
+<script src="app.js?v=8-executive-20261123"></script>
 
 <section class="data-status card" aria-live="polite">
   <div><strong>สถานะข้อมูล</strong><span id="dataStatus" class="status-pill status-soon">กำลังเชื่อมต่อ Google Sheets…</span></div>
